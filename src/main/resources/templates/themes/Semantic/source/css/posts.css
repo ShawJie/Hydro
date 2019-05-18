@@ -1,0 +1,20 @@
+main{
+    padding-top: 4rem;
+}
+
+.tags .label, .categories .label{
+    cursor: pointer;
+}
+
+.options .column:first-child{
+    border-right: 1px solid rgba(67, 67, 67, 0.6);
+}
+
+.pagination{
+    padding: 0;
+    margin-top: 15px !important;
+}
+
+.pagination a{
+    outline: none;
+}

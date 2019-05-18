@@ -1,0 +1,56 @@
+.hide{
+    display: none;
+}
+
+.upload-part{
+    text-align: center;
+    border: 3px #434343 dashed;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.upload-part .description{
+    display: block;
+    margin-bottom: 15px;
+}
+
+.archive-info{
+    padding: 15px;
+}
+
+.rendering-review > img{
+    width: 100%;
+}
+
+.add-button{
+    cursor: pointer;
+}
+
+.add-button > .content > .header{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.theme-file-review{
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+.fields-review > .column{
+    color: #434343;
+}
+
+.option-set-part,.fields-review{
+    padding-top: 1rem;
+}
+
+.theme-file-review .ui.grid > .column{
+    padding: 0.5rem 0 !important;
+}
+
+.option-set-part .ui.input{
+    width: 95% !important;
+}

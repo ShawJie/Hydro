@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.UserDao">
+    <resultMap id="UserMapper" type="com.sfan.hydro.domain.model.User">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="account" property="account" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="avator" property="avator" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="github" property="github" jdbcType="VARCHAR" />
+        <result column="activated" property="activated" jdbcType="TINYINT" />
+        <result column="group_set" property="groupSet" jdbcType="VARCHAR" />
+        <result column="last_login_date" property="lastLoginDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="Columns">
+        id, user_name, account, password, avator, email,
+        github, activated, group_set, last_login_date
+    </sql>
+    
+    <sql id="tableName">HY_USER</sql>
+    
+    <insert id="saveUser" parameterType="com.sfan.hydro.domain.model.User">
+    	INSERT <include refid="tableName"/>(<include refid="Columns"/>)
+    	INTO VALUES(
+    		default, #{userName}, #{account},
+    		#{password}, #{email}, #{github},
+    		#{avator}, #{activanted},
+    		#{groupSet}, #{lastLoginDate}
+    	)
+    </insert>
+    
+     <update id="updateUser" parameterType="com.sfan.hydro.domain.model.User">
+    	UPDATE <include refid="tableName"/>
+    	SET
+    	<trim suffixOverrides="," suffix="WHERE id = #{id}">
+    		<if test="userName != null and userName != ''">user_name = #{userName},</if>
+	    	<if test="account != null and account != ''">account = #{account},</if>
+	    	<if test="password != null and password != ''">password = #{password},</if>
+	    	<if test="activated != null">activated = #{activated},</if>
+	    	<if test="groupSet != null">group_set = #{groupSet},</if>
+	    	<if test="lastLoginDate != null">last_login_date = #{lastLoginDate},</if>
+    	</trim>
+    </update>
+    
+    <delete id="remove" parameterType="java.lang.Integer">
+    	DELETE FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </delete>
+    
+    <select id="getById" parameterType="java.lang.Integer" resultMap="UserMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </select>
+    
+    <select id="listUser" parameterType="com.sfan.hydro.domain.model.User" resultMap="UserMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	<where>
+    		<if test="id != null">AND Id = #{id}</if>
+    		<if test="userName != null">AND user_name = #{userName}</if>
+	    	<if test="account != null">AND account = #{account}</if>
+	    	<if test="password != null">AND password = #{password}</if>
+	    	<if test="activated != null">AND activated = #{activated}</if>
+	    	<if test="groupSet != null">AND group_set = #{groupSet}</if>
+    	</where>
+    </select>
+
+	<select id="getUserByGroup" parameterType="java.lang.String" resultMap="UserMapper">
+		SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+		WHERE group_set = #{_parameter}
+	</select>
+</mapper>

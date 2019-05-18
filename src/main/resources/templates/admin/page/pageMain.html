@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Pages.list} + ' ﹤ Hydro')">
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Pages.list})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/page/pageMain.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large inline header">
+                <span th:text="#{Pages.list}"></span>
+                <a class="ui tiny button green basic add-page" href="/admin/page/add" th:text="#{common.add}"></a>
+            </div>
+            <div class="ui segment basic page-info">
+                <table class="ui basic table">
+                    <thead>
+                        <tr>
+                            <th class="five wide" th:text="#{Pages.page_name}"></th>
+                            <th class="seven wide" th:text="#{Pages.route_path}"></th>
+                            <th class="center aligned" th:text="#{common.operate}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="info in pageList">
+                            <td>{{info.pageName}}</td>
+                            <td>{{info.routePath}}</td>
+                            <td class="center aligned">
+                                <div class="ui buttons">
+                                    <a class="ui basic blue button" :href="'/admin/page/edit/' + info.id" th:text="#{common.edit}"></a>
+                                    <button class="ui basic red button" @click="removePage(info)" th:text="#{common.delete}"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot v-show="pageList.length == 0">
+                        <tr>
+                            <td colspan="3" class="center aligned" th:text="#{Pages.list_empty}"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                delete_ask: '[[#{Pages.delete_ask}]]'
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script th:src="@{/js/page/pageMain.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<head th:fragment="commonOnLoadfile(title)">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title th:text="${title}"></title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdn.bootcss.com/noty/3.1.4/noty.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.js"></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <link href="https://cdn.bootcss.com/noty/3.1.4/noty.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/animate.css/3.7.0/animate.css" rel="stylesheet">
+    <link rel="shortcut icon" th:href="@{/image/icon.ico}" type="image/x-icon">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>

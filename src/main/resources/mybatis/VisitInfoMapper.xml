@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.VisitInfoDao">
+    <resultMap id="VisitInfoMapper" type="com.sfan.hydro.domain.model.VisitInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="request_path" property="requestPath" jdbcType="VARCHAR"/>
+        <result column="datetime" property="datetime" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="tableName">
+        HY_VISIT_INFO
+    </sql>
+
+    <sql id="fields">
+        id, ip, request_path, datetime
+    </sql>
+
+    <insert id="saveVisitInfo" parameterType="com.sfan.hydro.domain.model.VisitInfo">
+        INSERT INTO <include refid="tableName"/> (<include refid="fields"/>) VALUES(
+          DEFAULT, #{ip}, #{requestPath}, #{datetime}
+        )
+    </insert>
+
+    <select id="listVisitInfo" parameterType="java.util.Map" resultMap="VisitInfoMapper">
+      SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+      <where>
+          datetime BETWEEN #{startTime, jdbcType=TIMESTAMP} AND #{endTime, jdbcType=TIMESTAMP}
+      </where>
+      ORDER BY datetime DESC
+    </select>
+
+    <select id="countVisit" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(0) as count FROM <include refid="tableName"/>
+        <if test="startTime != null">
+            <where>
+                datetime between #{startTime, jdbcType=TIMESTAMP} AND #{endTime, jdbcType=TIMESTAMP}
+            </where>
+        </if>
+    </select>
+</mapper>

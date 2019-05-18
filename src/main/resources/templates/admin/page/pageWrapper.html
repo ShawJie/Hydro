@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <link rel="shortcut icon" th:href="@{/image/icon.ico}" type="image/x-icon">
+    <title></title>
+</head>
+<body>
+    <div class="page-container" v-html="pageContent"></div>
+</body>
+<script>
+    var pageWapperVm = new Vue({
+        el: '.page-container',
+        data: {
+            pageContent: '',
+            pageName: ''
+        },
+        mounted: function () {
+            opener.postMessage('ready', '*');
+            window.addEventListener("message", this.receiveMessage, false);
+        },
+        methods: {
+            receiveMessage: function (event) {
+                if(event.origin == window.location.origin) {
+                    if (typeof event.data == 'object') {
+                        this.pageContent = event.data.pageContent;
+                        this.pageName = event.data.pageName;
+                    }
+                }
+            }
+        },
+        watch: {
+            pageName: function (val) {
+                if(val != ''){
+                    document.querySelector('title').innerHTML = val;
+                }
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Article.categories} + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Article.categories})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/article/articleExten.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large header" th:text="#{Article.categories}"></div>
+            <div class="ui grid">
+                <div class="six wide column">
+                    <form class="ui form new-data" onsubmit="return false;">
+                        <h4 class="ui dividing header" th:text="#{Article.addNew}"></h4>
+                        <div class="field">
+                            <label th:text="#{Article.categories.name}"></label>
+                            <input type="text" name="categoryName" v-model="category.categoryName"/>
+                        </div>
+                        <div class="field">
+                            <label th:text="#{Article.categories.description}"></label>
+                            <textarea name="description" rows="5" style="resize: none" v-model="category.description"></textarea>
+                        </div>
+                        </input>
+                        <button class="ui button save" type="button" th:text="#{common.save}" @click="checkForSubmit(category)"></button>
+                    </form>
+                </div>
+                <div class="ten wide column category-list">
+                    <div class="search-bar ui input right icon">
+                        <input v-model="paramName" placeholder="Name..." @keyup.enter="getCategories(1)"/>
+                        <i class="inverted circular search link icon" @click="getCategories(1)"></i>
+                    </div>
+                    <table class="ui selectable compact table">
+                        <thead>
+                            <tr>
+                                <th class="three wide" th:text="#{Article.categories.name}"></th>
+                                <th class="ten wide" th:text="#{Article.categories.description}"></th>
+                                <th class="three wide center aligned" th:text="#{common.operate}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="cat in categoryList">
+                                <td>{{cat.categoryName}}</td>
+                                <td>{{cat.description}}</td>
+                                <td class="center aligned">
+                                    <div class="ui small buttons">
+                                        <button class="ui positive button edit" @click="editModal(cat)" th:text="#{common.edit}"></button>
+                                        <div class="or"></div>
+                                        <button class="ui negative button remove" @click="removeCategory(cat.id)" th:text="#{common.remove}"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <paginate
+                            :page-count="pageCount"
+                            :click-handler="paginationCallback"
+                            :prev-text="'⟨'"
+                            :prev-class="'item'"
+                            :next-text="'⟩'"
+                            :next-class="'item'"
+                            :container-class="'ui pagination menu pagination'"
+                            :page-class="'item'"
+                            v-show="totalCount > 0">
+                    </paginate>
+                </div>
+            </div>
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header" th:text="#{Article.edit}"></div>
+                <form class="ui form edit-data" onsubmit="return false;">
+                    <div class="field">
+                        <label th:text="#{Article.categories.name}"></label>
+                        <input type="text" name="categoryName" v-model="editCategory.categoryName"/>
+                    </div>
+                    <div class="field">
+                        <label th:text="#{Article.categories.description}"></label>
+                        <textarea name="description" rows="5" style="resize: none" v-model="editCategory.description"></textarea>
+                    </div>
+                    <button class="ui button save" type="button" th:text="#{common.save}" @click="checkForSubmit(editCategory)"></button>
+                </form>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                name_empty: '[[#{Article.categories.name_empty}]]',
+                delete_ask: '[[#{Article.categories.delete_ask}]]',
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+    <script th:src="@{/js/article/categoryList.js}"></script>
+</th:block>
+</body>
+</html>

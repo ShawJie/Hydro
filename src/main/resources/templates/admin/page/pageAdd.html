@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile((${customPage == null} ? #{Pages.add} : #{Pages.edit}) + ' ﹤ Hydro')">
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide((${customPage == null} ? #{Pages.add} : #{Pages.edit}))"></aside>
+</th:block>
+    <section>
+        <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/page/pageAdd.css}"/>
+        <div class="main-layout">
+            <div class="ui large inline header" v-if="customPage.id == null" th:text="#{Pages.add}"></div>
+            <div class="ui large inline header" v-else th:text="#{Pages.edit}"></div>
+            <div class="ui form grid">
+                <div class="twelve wide column">
+                    <div class="field">
+                        <label th:text="#{Pages.page_name}"></label>
+                        <input type="text" v-model="customPage.pageName">
+                    </div>
+                    <div class="field">
+                        <label th:text="#{Pages.route_path}"></label>
+                        <div class="ui right labeled input">
+                            <div class="ui label">{{webSitePath}}/</div>
+                            <input type="text" v-model="customPage.routePath" @blur="replaceSpecialChar">
+                            <div class="ui label">/</div>
+                        </div>
+                        <div class="ui pointing basic red label route_tip" v-show="routePathExists" th:text="#{Pages.route_path_exists}"></div>
+                    </div>
+                    <div class="field">
+                        <textarea id="page-content" th:text="${pageContent}"></textarea>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="ui segment publish">
+                        <div class="ui header" th:text="#{Pages.publish}"></div>
+                        <div class="field">
+                            <label th:text="#{Pages.release_date}"></label>
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" placeholder="Date"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui three buttons">
+                            <button class="ui basic grey button" @click="checkForSubmit(false)" th:text="#{Pages.save_draft}"></button>
+                            <button class="ui basic blue button" @click="reviewPage" th:text="#{Pages.preview}"></button>
+                            <button class="ui basic green button" @click="checkForSubmit(true)" th:text="#{Pages.publish}"></button>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                pageName_empty: '[[#{Pages.page_name_empty}]]',
+                routePath_empty: '[[#{Pages.route_path_empty}]]',
+                publish_ask: '[[#{Pages.publish_ask}]]',
+            }
+        </script>
+        <script th:inline="javascript">
+            var customPage = /*[[${customPage}]]*/ null;
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script src="https://cdn.bootcss.com/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
+    <script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
+    <script th:src="@{/js/page/pageAdd.js}" ></script>
+</th:block>
+</body>
+</html>

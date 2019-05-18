@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Article.tag} + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Article.tag})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/article/articleExten.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large header" th:text="#{Article.tag}"></div>
+            <div class="ui grid">
+                <div class="six wide column">
+                    <form class="ui form new-data" onsubmit="return false;">
+                        <h4 class="ui dividing header" th:text="#{Article.addNew}"></h4>
+                        <div class="field">
+                            <label th:text="#{Article.tag.name}"></label>
+                            <input type="text" v-model="tag.tagName"/>
+                        </div>
+                        <div class="field">
+                            <label th:text="#{Article.tag.description}"></label>
+                            <textarea name="description" rows="5" style="resize: none" v-model="tag.description"></textarea>
+                        </div>
+                        </input>
+                        <button class="ui button save" type="button" th:text="#{common.save}" @click="checkForSubmit(tag)"></button>
+                    </form>
+                </div>
+                <div class="ten wide column tag-list">
+                    <div class="search-bar ui input right icon">
+                        <input v-model="paramName" placeholder="Name..." @keyup.enter="getTags(1)"/>
+                        <i class="inverted circular search link icon"  @click="getTags(1)"></i>
+                    </div>
+                    <table class="ui selectable compact table">
+                        <thead>
+                        <tr>
+                            <th class="three wide" th:text="#{Article.tag.name}"></th>
+                            <th class="ten wide" th:text="#{Article.tag.description}"></th>
+                            <th class="three wide center aligned" th:text="#{common.operate}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="t in tagList">
+                            <td>{{t.tagName}}</td>
+                            <td>{{t.description}}</td>
+                            <td class="center aligned">
+                                <div class="ui small buttons">
+                                    <button class="ui positive button edit" @click="editModal(t)" th:text="#{common.edit}"></button>
+                                    <div class="or"></div>
+                                    <button class="ui negative button remove" @click="removeTag(t.id)" th:text="#{common.remove}"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header" th:text="#{Article.edit}"></div>
+                <form class="ui form edit-data" onsubmit="return false;">
+                    <div class="field">
+                        <label th:text="#{Article.tag.name}"></label>
+                        <input type="text" v-model="editTag.tagName"/>
+                    </div>
+                    <div class="field">
+                        <label th:text="#{Article.tag.description}"></label>
+                        <textarea name="description" rows="5" style="resize: none" v-model="editTag.description"></textarea>
+                    </div>
+                    <input type="hidden" name="id"/>
+                    <button class="ui button save" type="button" th:text="#{common.save}" @click="checkForSubmit(editTag)"></button>
+                </form>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                name_empty: '[[#{Article.tag.name_empty}]]',
+                delete_ask: '[[#{Article.tag.delete_ask}]]',
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+    <script th:src="@{/js/article/tagList.js}"></script>-
+</th:block>
+</body>
+</html>

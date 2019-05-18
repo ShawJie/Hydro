@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hydro</title>
+    <link rel="shortcut icon" href="/image/icon.ico" type="image/x-icon">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/tocbot/4.6.0/tocbot.min.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/source/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/source/css/postDetail.css">
+</head>
+<body>
+    <aside>
+        <top-menu th:about-path="${About_Link}"></top-menu>
+    </aside>
+    <main>
+        <div class="ui container basic segment post-content">
+            <div class="ui right rail">
+                <div class="ui sticky">
+                    <div class="ui segment basic toc-container"></div>
+                </div>
+            </div>
+            <div class="post-info ui segment basic">
+                <div class="ui large header">
+                    {{post.title}}
+                    <div class="sub header">{{createDate}}</div>
+                </div>
+                <div class="ui list horizontal divided">
+                    <div class="item">
+                        <a class="ui label orange basic" :href="'/posts?cid=' + post.category.id">
+                            {{post.category.categoryName}}
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a class="ui label basic" v-for="tag in post.tagList" :href="'/posts?tid=' + tag.id">
+                            {{tag.tagName}}
+                        </a>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="content" v-html="post.articleContent"></div>
+            </div>
+        </div>
+    </main>
+<script src="/source/js/main.js"></script>
+<script src="/source/js/postDetail.js"></script>
+</body>
+</html>

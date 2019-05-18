@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.TagDao">
+    <resultMap id="TagMapper" type="com.sfan.hydro.domain.model.Tag">
+        <id column="Id" property="id" jdbcType="INTEGER" />
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Columns">
+        id, tag_name, description
+    </sql>
+    
+    <sql id="tableName">HY_TAG</sql>
+    
+    <insert id="saveTag" parameterType="com.sfan.hydro.domain.model.Tag" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)
+    	VALUES(
+    		default, #{tagName}, #{description}
+    	)
+    </insert>
+    
+     <update id="updateTag" parameterType="com.sfan.hydro.domain.model.Tag">
+    	UPDATE <include refid="tableName"/>
+    	SET
+    	<trim suffixOverrides="," suffix="WHERE id = #{id}">
+    		<if test="tagName != null">tag_name = #{tagName},</if>
+	    	<if test="description != null">description = #{description},</if>
+    	</trim>
+    </update>
+    
+    <delete id="remove" parameterType="java.lang.Integer">
+    	DELETE FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </delete>
+    
+    <select id="getTagById" parameterType="java.lang.Integer" resultMap="TagMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </select>
+    
+    <select id="listTag" parameterType="com.sfan.hydro.domain.model.Tag" resultMap="TagMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	<where>
+    		<if test="id != null">AND id = #{id}</if>
+    		<if test="tagName != null">AND tag_name = #{tagName}</if>
+    	</where>
+    </select>
+
+	<select id="listTagByPage" parameterType="com.sfan.hydro.domain.expand.PageModel" resultMap="TagMapper">
+		SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+		<where>
+			<if test="param.id != null">AND id = #{param.id}</if>
+			<if test="param.tagName != null and param.tagName != ''">AND tag_name LIKE concat('%',#{param.tagName},'%')</if>
+		</where>
+	</select>
+
+	<select id="countTagName" parameterType="com.sfan.hydro.domain.model.Category" resultType="java.lang.Integer">
+		SELECT COUNT(1) as count FROM <include refid="tableName"/>
+		<where>
+			tag_name = #{tagName}
+			<if test="id != null">AND id != #{id}</if>
+		</where>
+	</select>
+
+	<select id="getArticleTagRelation" parameterType="java.lang.Integer" resultMap="TagMapper">
+		SELECT <include refid="Columns"/> FROM <include refid="tableName"/> t
+		INNER JOIN HY_ARTICLE_TAG r ON t.id = r.tid
+		<where>
+			r.aid = #{_parameter}
+		</where>
+	</select>
+
+	<insert id="saveArticleTagRelation" parameterType="com.sfan.hydro.domain.model.Article">
+		DELETE FROM HY_ARTICLE_TAG WHERE aid = #{id};
+		<if test="tagList != null and tagList.size() > 0">
+			INSERT INTO HY_ARTICLE_TAG (aid, tid)
+			VALUES
+			<foreach collection="tagList" item="tag" separator=",">
+				(#{id}, #{tag.id})
+			</foreach>
+		</if>
+	</insert>
+</mapper>

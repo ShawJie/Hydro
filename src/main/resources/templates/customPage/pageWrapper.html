@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" th:href="@{/image/icon.ico}" type="image/x-icon">
+    <title th:text="${pageName}"></title>
+</head>
+<style>
+    .back-home{
+        border: 1px solid #2a3231;
+        padding: 3px;
+        position: absolute;
+        top: 3rem;
+        left: 3rem;
+        font-weight: lighter;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <aside>
+        <div class="back-home">HOME</div>
+    </aside>
+    <th:block th:utext="${pageContent}"></th:block>
+    <script>
+        document.querySelector('.back-home').onclick = function () {
+            window.location.pathname = "/";
+        }
+    </script>
+</body>
+</html>

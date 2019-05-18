@@ -1,0 +1,45 @@
+Configutation:
+  status: warn
+
+  Properties:
+    Property:
+      name: log-path
+      value: "logs"
+
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{yyyy/MM/dd HH:mm:ss} [%-5level] %t, %c{1} - %msg%n"
+
+    RollingFile:
+      name: File_Appender
+      ignoreExceptions: false
+      fileName: ${log-path}/hydro-trace.log
+      filePattern: ${log-path}/%d{yyyy-MM-dd}/info_%i.log
+      Policies:
+        TimeBasedTriggeringPolicy:
+          interval: 1
+          modulate: true
+        SizeBasedTriggeringPolicy:
+          size: "256MB"
+      PatternLayout:
+        pattern: "%d{yyyy/MM/dd HH:mm:ss} [%-5level] %t, %c{1} - %msg%n"
+
+  Loggers:
+
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console_Appender
+
+    Logger:
+      - name: com.sfan.hydro.logger
+        additivity: false
+        level: trace
+        AppenderRef:
+          - ref: File_Appender
+      - name: org.springframework
+        level: info

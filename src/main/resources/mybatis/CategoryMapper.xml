@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.CategoryDao">
+    <resultMap id="CategoryMapper" type="com.sfan.hydro.domain.model.Category">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Columns">
+        id, category_name, description
+    </sql>
+    
+    <sql id="tableName">HY_CATEGORY</sql>
+    
+    <insert id="saveCategory" parameterType="com.sfan.hydro.domain.model.Category" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)
+    	VALUES(
+    		default, #{categoryName}, #{description}
+    	)
+    </insert>
+    
+     <update id="updateCategory" parameterType="com.sfan.hydro.domain.model.Category">
+    	UPDATE <include refid="tableName"/>
+    	SET
+    	<trim suffixOverrides="," suffix="WHERE id = #{id}">
+    		<if test="categoryName != null">category_name = #{categoryName},</if>
+	    	<if test="description != null">description = #{description},</if>
+    	</trim>
+    </update>
+    
+    <delete id="remove" parameterType="java.lang.Integer">
+    	DELETE FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </delete>
+    
+    <select id="getCategoryById" parameterType="java.lang.Integer" resultMap="CategoryMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	WHERE id = #{_parameter}
+    </select>
+    
+    <select id="listCategory" parameterType="com.sfan.hydro.domain.model.Category" resultMap="CategoryMapper">
+    	SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+    	<where>
+    		<if test="id != null">AND Id = #{id}</if>
+    		<if test="categoryName != null">AND category_name = #{categoryName}</if>
+    	</where>
+    </select>
+
+	<select id="listCategoryByPage" parameterType="com.sfan.hydro.domain.expand.PageModel" resultMap="CategoryMapper">
+		SELECT <include refid="Columns"/> FROM <include refid="tableName"/>
+		<where>
+			<if test="param.id != null">AND Id = #{param.idid}</if>
+			<if test="param.categoryName != null and param.categoryName != ''">AND category_name LIKE concat('%',#{param.categoryName},'%')</if>
+		</where>
+	</select>
+
+	<select id="countCategoryName" parameterType="com.sfan.hydro.domain.model.Category" resultType="java.lang.Integer">
+		SELECT COUNT(1) as count FROM <include refid="tableName"/>
+		<where>
+			category_name = #{categoryName}
+			<if test="id != null">AND id != #{id}</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.ArticleDao">
+    <resultMap id="ArticleMapper" type="com.sfan.hydro.domain.model.Article">
+        <id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uid" property="authorId" jdbcType="INTEGER"/>
+		<result column="create_date" property="createDate" jdbcType="DATE" />
+		<result column="view_count" property="viewCount" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="markdown_path" property="markdownPath" jdbcType="VARCHAR" />
+		<result column="html_path" property="htmlPath" jdbcType="VARCHAR" />
+		<result column="cid" property="categoryId" jdbcType="INTEGER" />
+		<result column="is_publicise" property="publicise" jdbcType="TINYINT" />
+		<result column="excerpt" property="excerpt" jdbcType="VARCHAR" />
+		<result column="category_text" property="categoryText" jdbcType="VARCHAR"/>
+		<association property="author" resultMap="com.sfan.hydro.dao.UserDao.UserMapper"/>
+		<collection property="tagList" ofType="com.sfan.hydro.domain.model.Tag">
+			<id property="id" column="tid" jdbcType="INTEGER"/>
+			<result property="tagName" column="tag_name" jdbcType="VARCHAR"/>
+		</collection>
+    </resultMap>
+    
+    <sql id="Columns">
+       id, uid, create_date, view_count, title,
+       markdown_path, html_path, cid,
+       is_publicise, excerpt
+    </sql>
+    
+    <sql id="tableName">HY_ARTICLE</sql>
+    
+    <select id="countTitle" parameterType="com.sfan.hydro.domain.model.Article" resultType="Integer">
+    	SELECT COUNT(0) from <include refid="tableName"/>
+    	<where>
+			title = #{title}
+			 <if test="id != null">AND id != #{id}</if>
+    	</where>
+    </select>
+    
+    <select id="listArticleByPage" parameterType="com.sfan.hydro.domain.expand.PageModel" resultType="java.lang.Integer">
+    	SELECT DISTINCT id from <include refid="tableName"/> a
+		LEFT JOIN hy_article_tag r ON a.id = r.aid
+		<where>
+	    	<if test="param != null">
+				<if test="param.title != null and param.title!=''">AND title like concat('%',#{param.title},'%')</if>
+				<if test="param.tag != null">AND r.tid = #{param.tag}</if>
+				<if test="param.categoryId != null">AND cid = #{param.categoryId}</if>
+				<if test="param.createDate != null">AND DATE_FORMAT(create_date,'%Y%m%d') = DATE_FORMAT(#{param.createDate},'%Y%m%d')</if>
+		    </if>
+    	</where>
+    </select>
+	
+	<select id="assemblyArticle" parameterType="java.util.Collection" resultMap="ArticleMapper">
+		SELECT a.id, uid, create_date, view_count, title, markdown_path, html_path,
+		cid, is_publicise, excerpt, tid, t.tag_name, u.user_name, c.category_name as category_text FROM
+		(SELECT
+			a.id, uid, create_date, view_count, title, markdown_path, html_path,
+			cid, is_publicise, excerpt, r.tid
+			FROM hy_article a
+			LEFT JOIN hy_article_tag r ON a.id = r.aid
+			<foreach open="WHERE a.id IN (" close=")" separator="," collection="collection" item="id">
+				#{id}
+			</foreach>
+		) a
+		LEFT JOIN hy_tag t ON a.tid = t.id
+		INNER JOIN hy_user u ON u.id = a.uid
+		LEFT JOIN hy_category c ON c.id = a.cid
+		ORDER BY a.create_date DESC
+	</select>
+    
+    <select id="listArticle" parameterType="com.sfan.hydro.domain.model.Article" resultMap="ArticleMapper">
+		SELECT a.id, uid, create_date, view_count, title, markdown_path, html_path,
+		cid, is_publicise, excerpt, category_text, t.id tid, t.tag_name, u.user_name from <include refid="tableName"/> a
+		INNER JOIN hy_user u ON u.id = a.uid
+		LEFT JOIN hy_article_tag r ON a.id = r.aid
+		INNER JOIN hy_tag t ON  r.tid = t.id
+    	<where>
+			<if test="param != null">
+				<if test="param.title != null and param.title!=''">AND title like concat('%',#{param.title},'%')</if>
+				<if test="param.tag != null">AND t.id = #{param.tag}</if>
+				<if test="param.categoryId != null">AND cid = #{param.categoryId}</if>
+				<if test="param.createDate != null">AND DATE_FORMAT(create_date,'%Y%m%d') = DATE_FORMAT(#{param.createDate},'%Y%m%d')</if>
+			</if>
+    	</where>
+    </select>
+
+	<select id="getArticleById" parameterType="com.sfan.hydro.domain.model.Article" resultMap="ArticleMapper">
+		SELECT <include refid="Columns"/> from <include refid="tableName"/>
+		<where>
+			id = #{id}
+		</where>
+	</select>
+    
+    <insert id="save" parameterType="com.sfan.hydro.domain.model.Article" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO <include refid="tableName"/>(<include refid="Columns"/>)
+    	VALUES(
+			DEFAULT, #{authorId}, sysdate(), 0, #{title},
+       		#{markdownPath}, #{htmlPath}, #{categoryId}, #{publicise}, #{excerpt}
+    	)
+    </insert>
+    
+    <update id="updateArticle" parameterType="com.sfan.hydro.domain.model.Article">
+    	UPDATE <include refid="tableName"/> SET
+    	<trim suffixOverrides="," suffix="WHERE id = #{id}">
+    		<if test="title!=null">title = #{title},</if>
+    		<if test="markdownPath!=null">markdown_path = #{markdownPath},</if>
+    		<if test="htmlPath!=null">html_path = #{htmlPath},</if>
+    		<if test="categoryId!=null">cid = #{categoryId},</if>
+    		<if test="excerpt!=null">excerpt = #{excerpt},</if>
+			is_publicise = #{publicise},
+    	</trim>
+    </update>
+
+	<delete id="deleteArticle" parameterType="java.lang.Integer">
+		DELETE <include refid="tableName"/> WHERE id = #{_parameter}
+	</delete>
+
+	<select id="countArticle" resultType="java.lang.Integer">
+		SELECT COUNT(0) as count FROM <include refid="tableName"/>
+	</select>
+
+	<update id="updateArticleViewCount" parameterType="java.lang.Integer">
+		UPDATE <include refid="tableName"/>
+		<trim prefix="SET" suffix="WHERE id = #{_parameter}">
+			view_count = view_count + 1
+		</trim>
+	</update>
+
+	<select id="listArticleArchivesByPage" parameterType="com.sfan.hydro.domain.expand.PageModel" resultMap="ArticleMapper">
+		SELECT id, title, create_date FROM <include refid="tableName"/>
+		ORDER BY create_date ${orderRule}
+	</select>
+</mapper>

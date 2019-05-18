@@ -1,0 +1,18 @@
+.publish.segment{
+    position: relative;
+    top: 1.5rem;
+}
+
+.CodeMirror{
+    height: 55vh;
+}
+
+.fullscreen,.CodeMirror-fullscreen,.editor-preview-side{
+    z-index:300 !important;
+}
+
+.route_tip{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

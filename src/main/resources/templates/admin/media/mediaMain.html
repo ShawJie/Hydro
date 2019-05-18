@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Media} + ' ﹤ Hydro')">
+</head>
+<body>
+    <th:block th:if="${pjaxLoad == null}">
+        <header th:replace="@{admin/common/main} :: adminHeader"></header>
+        <aside th:replace="@{admin/common/main} :: adminSide(#{Media})"></aside>
+    </th:block>
+    <section>
+        <link th:href="@{/css/media/mediaList.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large inline header" th:text="#{Media}"></div>
+            <div class="ui segments media-box">
+                <div class="ui segment native-bar">
+                    <div class="ui horizontal list">
+                        <div class="item">
+                            <button class="func-button select-all" th:title="#{common.select_all}" @click="toggleAll">
+                                <i class="check square icon" v-if="selectAll"></i>
+                                <i class="check square outline icon" v-else></i>
+                            </button>
+                        </div>
+                        <div class="item">
+                            <button class="func-button add-new" th:title="#{common.upload}" @click="addModal.show()">
+                                <i class="plus icon"></i>
+                            </button>
+                        </div>
+                        <div class="item">
+                            <button class="func-button delete" th:title="#{common.remove}" @click="deleteMedia">
+                                <i class="trash icon"></i>
+                            </button>
+                        </div>
+                        <div class="item">
+                            <div class="ui input right icon func-input ">
+                                <input placeholder="Search media item..." v-model="searchKey"/>
+                                <i class="inverted circular search link tiny icon" @click="listMediaItem(1)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui segment media-out-wrapper">
+                    <div class="media-container grid">
+                        <div class="media-item grid-item" v-for="item in mediaList">
+                            <div class="ui fitted checkbox check-input">
+                                <input type="checkbox" :value="item.id" v-model="selectedItem">
+                                <label></label>
+                            </div>
+                            <img class="ui rounded image" :src="'/media/' + item.filePath" @click="openEditModal(item)"/>
+                            <div class="media-item-info">
+                                <i class="map marker icon"></i>
+                                <span class="header">{{item.fileName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-down-icon" v-show="totalCount > mediaList.length"><i class="angle down icon" @click="nextPage"></i></div>
+                </div>
+            </div>
+            <div class="ui modal add-modal">
+                <i class="close icon"></i>
+                <div class="header" th:text="#{Media.new}"></div>
+                <form class="ui padded grid form" onsubmit="return false" enctype="multipart/form-data">
+                    <div class="eight wide column">
+                        <div class="media-review-box" @click="fileChooserOpen">
+                            <i class="plus icon" v-if="reviewPath == ''"></i>
+                            <div :style="{ backgroundImage: 'url(' + reviewPath + ')'}" class="media-preview" v-else>
+                            </div>
+                        </div>
+                        <div class="upload-tip" th:text="#{Media.upload_tip}"></div>
+                        <input type="file" class="hide" id="file_chooser" accept="image/png,image/jpg,image/jpeg" @change="fileChoosed">
+                    </div>
+                    <div class="eight wide column">
+                        <div class="filed-items">
+                            <div class="field">
+                                <label th:text="#{Media.fileName}"></label>
+                                <input type="text" v-model="media.fileName">
+                            </div>
+                            <div class="field">
+                                <label th:text="#{Media.description}"></label>
+                                <textarea style="resize: none" v-model="media.description"></textarea>
+                            </div>
+                            <button class="ui button save"  th:text="#{common.upload}" @click="checkForSubmit()"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ui basic modal edit-modal">
+                <div class="banner" :style="tempData.style" ></div>
+                <div class="detail-right">
+                    <div class="detail-content">
+                        <div class="description">
+                            <label th:text="#{Media.fileName}"></label>
+                            <i class="check icon edit-mode-button" v-show="editMode" @click="saveEdit"></i>
+                            <i class="cog icon edit-mode-button" @click="editMode = true" v-show="!editMode"></i>
+                            <div :class="['ui big input edit-item', { 'edit-mode': editMode, 'transparent': !editMode}]">
+                                <input v-model="tempData.fileName" :readonly="editMode ? null : 'readonly'">
+                            </div>
+                            <label th:text="#{Media.description}"></label>
+                            <div :class="['ui input edit-item textarea', { 'edit-mode': editMode, 'transparent': !editMode}]">
+                                <textarea v-model="tempData.description" :readonly="editMode ? null : 'readonly'"></textarea>
+                            </div>
+                        </div>
+                        <div class="ui input transparent clip-path">
+                            <input :value="tempData.clipPath" readonly/>
+                        </div>
+                        <button class="ui basic green button" @click="copyToClipboard" th:text="#{Media.getpath_toclip}"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                fileRequire: '[[#{Media.media_file_require}]]',
+                nameRequire: '[[#{Media.media_name_require}]]',
+                deleteAsk: '[[#{Media.delete_ask}]]'
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script th:src="@{/js/media/mediaMain.js}"></script>
+</th:block>
+</body>
+</html>

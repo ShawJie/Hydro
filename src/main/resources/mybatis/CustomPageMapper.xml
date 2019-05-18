@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.CustomPageDao">
+    <resultMap id="CustomPageMapper" type="com.sfan.hydro.domain.model.CustomPage">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="page_name" property="pageName" jdbcType="VARCHAR"/>
+        <result column="page_path" property="pagePath" jdbcType="VARCHAR"/>
+        <result column="route_path" property="routePath" jdbcType="VARCHAR"/>
+        <result column="is_publish" property="publish" jdbcType="TINYINT"/>
+        <result column="release_date" property="releaseDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="tableName">
+        HY_PAGE
+    </sql>
+
+    <sql id="fields">
+        id, page_name, route_path, page_path, is_publish, release_date
+    </sql>
+    
+    <insert id="addCustomPage" parameterType="com.sfan.hydro.domain.model.CustomPage" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO <include refid="tableName"/> (<include refid="fields"/>) VALUES(
+          DEFAULT, #{pageName}, #{routePath}, #{pagePath}, #{publish}, #{releaseDate}
+        )
+    </insert>
+
+    <update id="updatePage" parameterType="com.sfan.hydro.domain.model.CustomPage">
+        UPDATE <include refid="tableName"/>
+        <trim prefix="SET" suffix="WHERE id = #{id}" suffixOverrides=",">
+            <if test="pageName != null and pageName != ''">page_name = #{pageName},</if>
+            <if test="routePath != null and routePath != ''">route_path = #{routePath},</if>
+            <if test="publish != null">is_publish = #{publish},</if>
+            <if test="releaseDate != null">release_date = #{releaseDate}</if>
+        </trim>
+    </update>
+
+    <delete id="deleteCustomPage" parameterType="java.lang.Integer">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id = #{_parameter}
+    </delete>
+    
+    <select id="getByRoutePath" parameterType="java.lang.String" resultMap="CustomPageMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        WHERE route_path = #{_parameter}
+    </select>
+
+    <select id="getReleasedPageByRoute" parameterType="com.sfan.hydro.domain.DTO.CustomPageDTO" resultMap="CustomPageMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        <where>
+            route_path = #{routePath}
+            AND ( release_date IS NULL OR release_date &lt;= #{releaseDate})
+            AND is_publish = #{publish}
+        </where>
+    </select>
+
+    <select id="listCustomPage" resultMap="CustomPageMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+    </select>
+
+    <select id="getById" parameterType="java.lang.Integer" resultMap="CustomPageMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        WHERE id = #{_parameter}
+    </select>
+</mapper>

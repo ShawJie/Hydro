@@ -1,0 +1,9 @@
+.page-info{
+    padding: 0 !important;
+}
+
+.add-page{
+    position: relative;
+    top: -5px;
+    left: 10px;
+}

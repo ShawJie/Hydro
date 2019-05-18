@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Posts - Hydro</title>
+    <link rel="shortcut icon" href="/image/icon.ico" type="image/x-icon">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/source/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/source/css/posts.css">
+</head>
+<body>
+    <aside>
+        <top-menu th:about-path="${About_Link}"></top-menu>
+    </aside>
+    <main>
+        <div class="ui container">
+            <div class="ui segment basic">
+                <div class="ui two column grid centered options">
+                    <div class="column center aligned">
+                        <div class="ui header">标签 / TAG</div>
+                        <div class="ui list horizontal tags">
+                            <span class="item" v-for="tag in tags">
+                                <span class="ui label" :class="{green: param.tid == tag.id}" @click="reSearch('tid', tag.id)">{{tag.tagName}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="column center aligned">
+                        <div class="ui header">类别 / CATEGORY</div>
+                        <div class="ui list horizontal categories">
+                            <span class="item" v-for="category in categories">
+                                <span class="ui label" :class="{green: param.cid == category.id}" @click="reSearch('cid', category.id)">{{category.categoryName}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="twelve wide column">
+                        <div class="ui fluid icon input">
+                            <input placeholder="title" v-model="param.title" @keyup.enter="reSearch('title', param.title)"/>
+                            <i class="inverted circular search link icon" @click="reSearch('title', param.title)"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui cards three grid posts">
+                    <div class="card" v-for="post in postList">
+                        <div class="content">
+                            <a class="header" :href="'/post/' + post.id">{{post.title}}</a>
+                            <div class="meta">{{post.author.userName}}</div>
+                            <div class="description" v-html="post.excerpt"></div>
+                        </div>
+                        <div class="extra content">
+                            <div class="left floated">{{post.category.categoryName}}</div>
+                            <div class="right floated">
+                                <template v-for="tag in post.tagList">
+                                    {{tag.tagName}}
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui segment basic center aligned">
+                    <paginate
+                            :page-count="pageCount"
+                            :click-handler="paginationCallback"
+                            :prev-text="'⟨'"
+                            :prev-class="'item'"
+                            :next-text="'⟩'"
+                            :next-class="'item'"
+                            :container-class="'ui pagination menu pagination'"
+                            :page-class="'item'"
+                            v-if="postAmount > 0">
+                    </paginate>
+                    <div class="ui header" v-else>这里什么也没有了</div>
+                </div>
+            </div>
+        </div>
+    </main>
+<script src="/source/js/main.js"></script>
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<script src="/source/js/posts.js"></script>
+</body>
+</html>

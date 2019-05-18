@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Hydro</title>
+	<link rel="shortcut icon" href="image/icon.ico" type="image/x-icon">
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+	<script src="https://vuejs.org/js/vue.js"></script>
+	<link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="source/css/main.css">
+	<link rel="stylesheet" type="text/css" href="source/css/index.css">
+</head>
+<body>
+	<aside>
+		<top-menu th:about-path="${About_Link}"></top-menu>
+	</aside>
+	<header>
+		<div class="banner" th:style="'background-image: url(' + ${Index_Background} + ')'">
+			<div class="banner-blurry">
+				<div class="rotate-img" th:style="'background-image: url(' + ${Index_Background} + ')'"></div>
+			</div>
+			<div class="content">
+				<div class="owner-info ui center aligned basic segment">
+					<div class="owner-avator">
+						<img :src="ownerInfo.avator">
+					</div>
+					<div class="ui header username">{{ownerInfo.userName}}</div>
+					<div class="ui list inverted horizontal very relaxed">
+						<a class="item" :href="ownerInfo.github">
+							<i class="inverted github icon"></i>
+						</a>
+						<a class="item" :href="'mailto:' + ownerInfo.email">
+							<i class="inverted envelope icon"></i>
+						</a>
+					</div>
+					<div class="ui divider"></div>
+					<div class="tic-tok">Hey there, Welcome to my little site</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main>
+		<div class="divided-line" :style="{height: containerHeight}"></div>
+		<div class="post container ui grid">
+			<div :class="[index % 2 ? 'right' : 'left','floated ten wide column']" v-for="(post, index) in postList">
+				<div :class="[index % 2 ? 'right' : 'left', 'post-item ui segment aligned']">
+					<a :class="['ui orange', index % 2 ? '' : 'right', 'ribbon label']" v-if="post.category">
+						{{post.category.categoryName}}
+					</a>
+					<div :class="['ui', index % 2 ? 'left' : 'right', 'aligned header']">
+						<div class="sub header">{{dateFormat(post.createDate)}}</div>
+						<span @click="jumpToPost(post.id)" class="post-enter">{{post.title}}</span>
+					</div>
+					<div class="excerpt" v-html="post.excerpt"></div>
+					<div class="ui divider"></div>
+					<div class="ui list horizontal">
+						<div class="item" v-for="tag in post.tagList">
+							<span class="ui basic label grey">{{tag.tagName}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui segment center aligned basic see-more-button" v-show="postList.length < postAmount">
+			<button class="ui button basic" @click="nextPage">查看更多</button>
+		</div>
+	</main>
+	<footer>
+		<div class="ui segment basic center aligned footer">
+			<div class="ui horizontal divided list">
+				<div class="item">
+					<div class="ui small header">©POWERED BY HYDRO</div>
+				</div>
+				<div class="item">
+					<div class="ui small header">DESIGN: SHAW</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+<script src="source/js/main.js"></script>
+<script src="source/js/index.js"></script>
+</body>
+</html>

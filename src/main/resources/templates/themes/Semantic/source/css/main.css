@@ -1,0 +1,40 @@
+body::-webkit-scrollbar{
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track{
+    background: #383934;
+}
+
+body::-webkit-scrollbar-thumb{
+    background: #555652;
+}
+
+body::-webkit-scrollbar-thumb:hover{
+    background: #2a3231;
+}
+
+.top.menu{
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+}
+
+.top.menu.active{
+    position: fixed !important;
+    top: 0;
+    background: #ffffff !important;
+    box-shadow: 0 0 17px rgba(36, 37, 38, 0.4);
+
+    animation: absToFix 250ms ease-out;
+}
+
+@keyframes absToFix {
+    from {background: transparent}
+    to {background: #ffffff}
+}
+
+.top.menu > .segment{
+    padding: 1em 4em !important;
+}
+

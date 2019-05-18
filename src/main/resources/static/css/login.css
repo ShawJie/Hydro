@@ -1,0 +1,30 @@
+.wapper{
+    background-image: linear-gradient(to bottom, #434343 0%, black 100%);
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 150px;
+}
+.logo{
+    width: 150px;
+    height: 150px;
+    margin: 0px auto;
+    border: #fff solid 7px;
+    border-radius: 10rem;
+    display: flex;
+    justify-content: center;
+}
+.logo>img{
+    width: 80px;
+}
+.login-field{
+    display: inline-block;
+    padding: 35px;
+    width: 25%;
+}
+.fields>*{
+    margin-bottom: 15px;
+}
+.end-tip>a{
+    color: #fff;
+}

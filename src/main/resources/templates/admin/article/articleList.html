@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Article.all} + ' ﹤ Hydro')">
+</head>
+<body>
+	<th:block th:if="${pjaxLoad == null}">
+		<header th:replace="@{admin/common/main} :: adminHeader"></header>
+		<aside th:replace="@{admin/common/main} :: adminSide(#{Article.all})"></aside>
+	</th:block>
+	<section>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui-calendar/0.0.8/calendar.min.css"/>
+		<link th:href="@{/css/article/articleList.css}" rel="stylesheet"/>
+		<div class="main-layout">
+			<div class="ui large header" th:text="#{Article.all}"></div>
+			<div class="ui horizontal divider">
+				<i class="angle left icon"></i><th:block th:text="#{common.param}"></th:block><i class="angle right icon"></i>
+			</div>
+			<div class="ui form">
+				<div class="four fields">
+					<div class="field">
+						<label th:text="#{common.title}"></label>
+						<input name="title" v-model="article.title">
+					</div>
+					<div class="field">
+						<label th:text="#{common.tag}"></label>
+						<select name="tag" class="ui fluid dropdown" v-model="article.tag">
+							<option th:each="tag:${tags}" th:value="${tag.id}" th:text="${tag.tagName}"></option>
+						</select>
+					</div>
+					<div class="field">
+						<label th:text="#{common.category}"></label>
+						<select name="category" class="ui fluid dropdown" v-model="article.category">
+							<option th:each="category:${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+						</select>
+					</div>
+					<div class="field">
+						<label th:text="#{common.create_date}"></label>
+						<div class="ui calendar" id="createDate">
+							<div class="ui input left icon">
+								<i class="calendar icon"></i>
+								<input type="text" placeholder="Date"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="ui button fluid query" th:text="#{common.search}" @click="getArticles(1)"></button>
+			</div>
+			<div class="ui horizontal divider">
+                <i class="angle left icon"></i>
+				<th:block th:text="#{Article}"></th:block>
+				<i class="angle right icon"></i>
+			</div>
+			<div class="ui cards five grid articles">
+				<div class="card" v-for="article in articleList">
+					<div class="content">
+						<div class="header">{{article.title}}</div>
+						<div class="meta">{{article.author.userName}}</div>
+						<div class="description" v-html="article.excerpt"></div>
+					</div>
+					<div class="extra content">
+						<div class="left floated">{{article.categoryText}}</div>
+						<div class="right floated">
+							<template v-for="tag in article.tagList">
+								{{tag.tagName}}
+							</template>
+						</div>
+					</div>
+					<div class="extra content">
+						<div class="ui two buttons">
+							<div class="ui basic green button view" th:text="#{Article.add.review}" @click="review(article.id)"></div>
+							<div class="ui basic blue button edit" th:text="#{common.edit}" @click="edit(article.id)"></div>
+						</div>
+					</div>
+				</div>
+				<div class='ui active centered inline loader' style='margin-top: 75px;z-index: 10;' v-show="onLoad"></div>
+				<div class="ui icon header" style="width: 100%" v-show="totalCount == 0">
+					<i class="file alternate outline icon"></i>
+					<th:block th:text="#{Article.empty}"></th:block>
+				</div>
+			</div>
+			<paginate
+					:page-count="pageCount"
+					:click-handler="paginationCallback"
+					:prev-text="'⟨'"
+					:prev-class="'item'"
+					:next-text="'⟩'"
+					:next-class="'item'"
+					:container-class="'ui pagination menu pagination'"
+					:page-class="'item'"
+					v-show="totalCount > 0">
+			</paginate>
+		</div>
+	</section>
+<th:block th:if="${pjaxLoad == null}">
+	<script src="https://cdn.bootcss.com/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
+	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+	<script th:src="@{/js/article/articleList.js}"></script>
+</th:block>
+</body>
+</html>

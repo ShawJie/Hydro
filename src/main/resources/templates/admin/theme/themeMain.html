@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Theme} + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Theme})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/theme/themeMain.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large inline header" th:text="#{Theme}"></div>
+            <div class="ui basic semantic themes">
+                <div class="ui cards">
+                    <div class="card" v-for="item in themeList">
+                        <span class="ui right green corner label" v-if="item.current">
+                            <i class="check icon"></i>
+                        </span>
+                        <div class="image">
+                            <img class="ui image Medium" :src="'/themes/' + item.themePath + item.rendering"/>
+                        </div>
+                        <div class="content">
+                            <a class="header">{{item.themeName}}</a>
+                            <div class="meta">
+                                <span>{{item.creator}}</span>
+                            </div>
+                            <div class="description">
+                                {{item.description}}
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <div class="ui two buttons" v-if="!item.current">
+                                <button class="ui basic green button" @click="applyTheme(item)" th:text="#{common.apply}"></button>
+                                <button class="ui basic red button" @click="removeTheme(item)" th:text="#{common.remove}"></button>
+                            </div>
+                            <div class="ui buttons">
+                                <button class="ui basic button blue" @click="optionModalShower(item)" th:text="#{common.edit}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card add-button" @click="installModal.show()">
+                        <div class="content">
+                            <div class="header">
+                                <i class="plus huge icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui modal install">
+                <i class="close icon"></i>
+                <div class="header" th:text="#{Theme.theme_archive_upload}"></div>
+                <div class="content">
+                    <div class="upload-part">
+                        <div class="ui basic buttons">
+                            <button class="ui button choose-button" @click="openChooser" th:text="#{Theme.archive_choose}"></button>
+                            <button class="ui button choose-button" v-show="archiveFileInfo.fileName" @click="uploadTheme" th:text="#{Theme.install_now}"></button>
+                        </div>
+                        <div class="archive-info" v-show="archiveFileInfo.fileName">
+                            <label>File Name：</label>
+                            {{archiveFileInfo.fileName}}
+                        </div>
+                        <span class="description" th:text="#{Theme.upload_tip}"></span>
+                        <input id="zip-chooser" type="file" class="hide" accept="application/zip" @change="haveChosen"/>
+                        <div class="ui indicating progress upload-progress-bar">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="label"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui modal option">
+                <i class="icon close"></i>
+                <div class="scrolling content">
+                    <div class="theme-file-review">
+                        <div class="rendering-review">
+                            <img :src="renderingImage"/>
+                        </div>
+                        <div class="fields-review">
+                            <div class="ui header" th:text="#{Theme.info}"></div>
+                            <div class="ui padded two column grid">
+                                <div class="column">
+                                    <div class="ui green horizontal label" th:text="#{Theme.theme_name}"></div>
+                                    {{theme.themeName}}
+                                </div>
+                                <div class="column">
+                                    <div class="ui blue horizontal label" th:text="#{Theme.theme_creator}"></div>
+                                    {{theme.creator}}
+                                </div>
+                                <div class="sixteen wide column">
+                                    <div class="ui teal horizontal label" th:text="#{Theme.description}"></div>
+                                    {{theme.description}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-set-part ui form" v-if="theme.option != null">
+                            <div class="ui header" th:text="#{Theme.custom_option}">Custom Option</div>
+                            <div class="ui padded three column grid">
+                                <div class="column" v-for="(v, k) in themeOptionMap">
+                                    <div class="field">
+                                        <label>{{v.textName}}</label>
+                                        <div class="ui input">
+                                            <input type="text" :name="k" :value="v.value">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="ui button basic blue" th:text="#{common.save}" @click="saveOptions"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                deleteAsk: "[[#{Theme.delete_ask}]]",
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script th:src="@{/js/theme/themeMain.js}"></script>
+</th:block>
+</body>
+</html>

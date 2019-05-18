@@ -1,0 +1,54 @@
+.logo{
+    margin: 0 25px;
+}
+.logo>img{
+    width: 105px;
+    margin-top: 5px;
+}
+
+section{
+    margin-top: 10vh;
+    padding: 0 15%;
+}
+
+.article-content{
+    padding: 0 !important;
+}
+
+.markdown-body{
+    width: 80%;
+}
+
+.page-toc{
+    width: 20% !important;
+}
+
+.toc-outline{
+    padding-top: 0 !important;
+}
+
+.toc-content > ul{
+    padding: 0;
+    margin: 0;
+}
+
+.toc-content li {
+    list-style: none;
+}
+
+.toc-list-item > a{
+    color: #434343;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.is-active-link{
+    background: #1d1c1d;
+    color: #fff !important;
+}
+
+.is-active-link::before{
+    content: '﹥';
+    color: #fff;
+}

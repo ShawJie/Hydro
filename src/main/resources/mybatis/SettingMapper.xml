@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.SettingDao">
+    <resultMap id="SettingMapper" type="com.sfan.hydro.domain.model.Setting">
+        <id column="Id" property="id" jdbcType="INTEGER" />
+        <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+        <result column="item_value" property="itemValue" jdbcType="VARCHAR" />
+        <result column="is_system_variable" property="systemVariable" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="tableName">
+        HY_SETTING
+    </sql>
+
+    <sql id="fieldName">
+        id, item_name, item_value, is_system_variable
+    </sql>
+    
+    <insert id="addSetting" parameterType="com.sfan.hydro.domain.model.Setting" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tableName"/> (<include refid="fieldName"/>)
+        VALUES (
+            DEFAULT, #{itemName}, #{itemValue}, #{systemVariable}
+        )
+    </insert>
+
+    <update id="updateSetting" parameterType="java.util.Collection">
+            UPDATE <include refid="tableName"/>
+            <trim prefix="SET" suffixOverrides=",">
+                <trim prefix="item_name = case" suffix="end,">
+                    <foreach collection="collection" item="setting">
+                        <if test="setting.itemName != null and setting.itemName != ''">
+                            when #{setting.id} then #{setting.itemName}
+                        </if>
+                    </foreach>
+                </trim>
+                <trim prefix="item_value = case" suffix="end,">
+                    <foreach collection="collection" item="setting">
+                        <if test="setting.itemValue != null">
+                            when #{setting.id} then #{setting.itemValue}
+                        </if>
+                    </foreach>
+                </trim>
+            </trim>
+        <foreach collection="collection" item="setting" open="WHERE id IN (" close=")" separator=",">
+            #{setting.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteSetting" parameterType="java.lang.Integer">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id = #{_parameter}
+    </delete>
+
+    <select id="listIsSystemVariable" parameterType="java.lang.Boolean" resultMap="SettingMapper">
+        SELECT <include refid="fieldName"/> FROM <include refid="tableName"/>
+        <where>
+            is_system_variable = #{_parameter}
+        </where>
+    </select>
+
+    <select id="getSettingById" parameterType="java.lang.Integer" resultMap="SettingMapper">
+        SELECT <include refid="fieldName"/> FROM <include refid="tableName"/>
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="listSetting" parameterType="java.util.Collection" resultMap="SettingMapper">
+        SELECT <include refid="fieldName"/> FROM <include refid="tableName"/>
+        <foreach collection="collection" item="itemName" open="WHERE item_name IN (" close=")" separator=",">
+            #{itemName}
+        </foreach>
+    </select>
+
+    <select id="checkSetNameExists" parameterType="com.sfan.hydro.domain.model.Setting" resultType="java.lang.Integer">
+        SELECT COUNT(1) as count FROM <include refid="tableName"/>
+        <where>
+            item_name = #{itemName}
+            <if test="id != null">AND id != #{id}</if>
+        </where>
+    </select>
+</mapper>

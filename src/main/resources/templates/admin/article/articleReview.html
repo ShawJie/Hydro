@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Preview</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdn.bootcss.com/tocbot/4.6.0/tocbot.min.js"></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/article/articleReview.css}" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div id="top-bar" class="ui inverted top fixed menu visible">
+            <div class="logo">
+                <img th:src="@{/image/icon-above-font.svg}"/>
+            </div>
+        </div>
+    </header>
+    <section>
+        <header class="article-title">
+            <div class="ui huge header">{{article.title}}</div>
+            <div class="ui labels tags">
+                <span class="ui grey label" v-if="article.categoryText != ''">
+                    <i class="folder outline icon"></i>
+                    {{article.categoryText}}
+                </span>
+                <span class="ui label" v-for="tag in article.tagList">
+                    <i class="tag icon"></i>
+                    {{tag.tagName}}
+                </span>
+            </div>
+            <div class="ui tiny header">
+                Create by {{article.author.userName}} , {{createDateStr}}
+            </div>
+        </header>
+        <div class="ui divider"></div>
+        <div class="article-content ui segment basic">
+            <div v-html="articleContent"></div>
+            <div class="ui right internal attached rail page-toc">
+                <div class="ui segment basic sticky toc-outline">
+                    <div class="toc-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script th:inline="javascript">
+    var articleInfo = /*[[${article}]]*/ null;
+    var articleContent = /*[[${articleContent}]]*/ "";
+</script>
+<script>
+    var articleReviewVm = new Vue({
+        el: document.getElementsByTagName('section')[0],
+        data: {
+            article: {
+                title: "",
+                categoryText: "",
+                tagList: [],
+                author: {
+                    userName: ''
+                },
+                createDate: null,
+            },
+            articleContent: ""
+        },
+        mounted: function () {
+            if(articleInfo == null){
+                opener.postMessage('ready', '*');
+                window.addEventListener("message", this.receiveMessage, false);
+            }else{
+                for(var field in this.article){
+                    this.article[field] = articleInfo[field];
+                }
+                this.articleContent = articleContent;
+                setTimeout(()=>{
+                    this.initToc();
+                }, 250);
+            }
+        },
+        methods: {
+            receiveMessage: function (event) {
+                if(event.origin == window.location.origin) {
+                    if (typeof event.data == 'object') {
+                        for(var field in this.article){
+                            this.article[field] = event.data.article[field];
+                        }
+                        this.articleContent = event.data.articleContent;
+                        let _self = this;
+                        this.$nextTick(function(){
+                            _self.initToc();
+                        });
+                    }
+                }
+            },
+            initToc: function () {
+                $('.ui.sticky').sticky({
+                    context: '.markdown-body',
+                    offset: 75,
+                });
+
+                var chars =['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G'];
+                function generateMixed(n) {
+                    var res = "";
+                    for(var i = 0; i < n ; i ++) {
+                        var id = Math.ceil(Math.random() * 16);
+                        res += chars[id];
+                    }
+                    return res;
+                }
+
+                document.querySelectorAll('.markdown-body h1,h2,h3').forEach(function (ele, index) {
+                    ele.id = generateMixed(8);
+                });
+
+                tocbot.init({
+                    tocSelector: '.toc-content',
+                    contentSelector: '.markdown-body',
+                    orderedList: false,
+                    headingSelector: 'h1, h2, h3',
+                });
+            }
+        },
+        computed: {
+            createDateStr: function () {
+                return this.article.createDate ? this.article.createDate.match(/\d{4}-\d{2}-\d{2}/)[0].replace(/-/g, '/') : "";
+            }
+        },
+        watch: {
+            "article.title": function (val, oldVal) {
+                if(val.length > 0){
+                    document.querySelector('title').innerHTML = val;
+                }
+            }
+        }
+    });
+</script>
+</html>

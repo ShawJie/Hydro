@@ -1,0 +1,33 @@
+main{
+    padding-top: 4rem;
+}
+
+.post-info{
+    padding: 0 !important;
+}
+
+.toc-container > ul{
+    padding: 0;
+    margin: 0;
+}
+
+.toc-container li {
+    list-style: none;
+}
+
+.toc-list-item > a{
+    color: #434343;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.is-active-link{
+    background: #1d1c1d;
+    color: #fff !important;
+}
+
+.is-active-link::before{
+    content: '﹥';
+    color: #fff;
+}

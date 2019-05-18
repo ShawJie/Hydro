@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile((${article == null}?#{Article.add}:#{Article.edit}) + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+	<header th:replace="@{admin/common/main} :: adminHeader" ></header>
+	<aside th:replace="@{admin/common/main} :: adminSide((${article == null}?#{Article.add}:#{Article.edit}))"></aside>
+</th:block>
+	<section>
+		<link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
+        <link th:href="@{/css/article/articleAdd.css}" rel="stylesheet">
+		<div class="main-layout">
+			<div class="ui large header">
+				<span v-if="article.id == 0" th:text="#{Article.add}"></span>
+				<span v-else th:text="#{Article.edit}"></span>
+			</div>
+			<div class="ui grid">
+				<div class="one column row">
+					<div class="column">
+						<div class="ui fluid icon input">
+							<input type="text" class="field_title" th:placeholder="#{Article.add.enter_title}" v-model="article.title">
+						</div>
+					</div>
+				</div>
+				<div class="one column row">
+					<div class="column">
+						<textarea id="markdown-editor" th:text="${articleContext}"></textarea>
+					</div>
+				</div>
+				<div class="three column row">
+					<div class="column">
+						<div class="ui styled fluid accordion">
+							<div class="active title"><i class="dropdown icon"></i><th:block th:text="#{common.tag}"></th:block></div>
+							<div class="active content">
+								<div class="ui right fluid labeled left icon input">
+									<i class="tags icon"></i>
+									<input type="text" name="tagName" th:placeholder="#{Article.add.enter_tags}" v-model="newTag">
+									<a class="ui tag label add-tag" th:text="#{Article.add.add_tags}" @click="addTag"></a>
+								</div>
+								<select multiple id="tags" class="ui fluid search dropdown tag-container" v-model="selectedTag">
+                                    <option th:each="tag:${tags}" th:value="${tag.id}" th:text="${tag.tagName}"></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="column">
+						<div class="ui styled fluid accordion">
+							<div class="active title"><i class="dropdown icon"></i><th:block th:text="#{common.category}"></th:block></div>
+							<div class="active content">
+								<div class="ui right fluid labeled left icon input">
+									<i class="tags icon"></i>
+									<input type="text" name="categoryName" th:placeholder="#{Article.add.enter_categorys}" v-model="newCategory">
+									<a class="ui tag label add-category" th:text="#{Article.add.add_category}" @click="addCategory"></a>
+								</div>
+								<select id="category" class="ui fluid search dropdown tag-container" v-model="article.categoryId">
+                                    <option th:each="category:${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="columns form ui">
+						<div style="padding:0 14px;" class="">
+							<h3 class="ui header">Release</h3>
+							<div class="inline field">
+								<div class="ui slider checkbox private">
+									<input type="checkbox" tabindex="0">
+									<label th:text="#{Article.add.private_article}"></label>
+								</div>
+							</div>
+							<button class="ui right labeled icon button" id="Preview" @click="checkForSubmit(review, false)">
+								<i class="chess pawn icon"></i> <th:block th:text="#{Article.add.review}"></th:block>
+							</button>
+							<button class="ui right labeled icon button" id="Publish" @click="checkForSubmit(publish)">
+								<i class="chess knight icon"></i> <th:block th:text="#{Article.add.publish}"></th:block>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			window._message = {
+				publish_ask: '[[#{Article.add.publish_ask}]]',
+				pickup_tags: '[[#{Article.add.pickup_tags}]]',
+				pickup_category: '[[#{Article.add.pickup_category}]]',
+				title_empty: '[[#{Article.add.title_empty}]]',
+			}
+		</script>
+		<script th:inline="javascript">
+			var articleInfo = /*[[${article}]]*/ null;
+		</script>
+	</section>
+<th:block th:if="${pjaxLoad == null}">
+	<script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
+	<script th:src="@{/js/article/articleAdd.js}"></script>
+</th:block>
+</body>
+</html>

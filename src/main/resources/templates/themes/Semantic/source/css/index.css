@@ -1,0 +1,109 @@
+
+.banner{
+	width: 100%;
+	height: 100vh;
+	background-size: cover;
+	overflow: hidden;
+}
+
+.banner > .banner-blurry{
+	width: 100%;
+	height: 100%;
+	transform: translate(45%, 5%) rotate(105deg);
+	overflow: hidden;
+	box-shadow: 0 0 17px rgba(36, 37, 38, 0.4);
+
+	animation: rte 1s ease-out 500ms;
+}
+
+@keyframes rte {
+	from {transform:translate(45%, 5%) rotate(90deg);}
+	to {transform:translate(45%, 5%) rotate(105deg);}
+}
+
+.banner > .banner-blurry > .rotate-img{
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	transform:  rotate(255deg) translate(-45%, -5%);
+	filter: blur(10px);
+
+	animation: rteimg 1s ease-out 500ms;
+}
+
+@keyframes rteimg {
+	from {transform: rotate(270deg) translate(-45%, -5%);}
+	to {transform: rotate(255deg) translate(-45%, -5%);}
+}
+
+.banner > .content{
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 20%;
+	padding: 3rem;
+	margin-right: 5%;
+	transform: translateY(-50%);
+	animation: movedown 1s ease-out 500ms;
+}
+
+@keyframes movedown {
+	from { transform: translateY(0%); }
+	to { transform: translateY(-50%); }
+}
+
+.owner-info .owner-avator{
+	width: 150px;
+	height: 150px;
+	border-radius: 10rem;
+	background: white;
+	overflow: hidden;
+
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.owner-avator > img{
+	width: 100%;
+}
+
+.owner-info > *{
+	color: white !important;
+}
+
+.menu-button{
+	position: absolute;
+	z-index: 2;
+	right: 30px;
+	top: 30px;
+}
+
+.post.container{
+	padding: 5rem 0;
+}
+
+.post-enter{
+	cursor: pointer;
+	transition: color 500ms;
+}
+
+.post-enter:hover{
+	color: #757575 !important;
+}
+
+.divided-line{
+	position: absolute;
+	width: 50%;
+	z-index: -1;
+	border-right: 1px solid #ccc;
+}
+
+.see-more-button{
+	padding-top: 0 !important;
+}
+
+.footer{
+	padding-top: 4rem !important;
+	padding-bottom: 8rem !important;
+}

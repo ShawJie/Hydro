@@ -1,0 +1,9 @@
+.tag-container{
+    margin:1rem 0 !important;
+}
+.fullscreen,.CodeMirror-fullscreen,.editor-preview-side{
+    z-index:300 !important;
+}
+.CodeMirror {
+    height: 350px;
+}

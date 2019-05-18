@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile('Login')">
+</head>
+<body>
+<div class="wapper">
+    <div class="logo">
+        <img th:src="@{image/icon.svg}">
+    </div>
+    <div class="login-field">
+        <form class="fields ui form" onsubmit="return false;">
+            <div class="ui fluid input field">
+                <input name="account" v-model="account" th:placeholder="#{Login.account}" />
+            </div>
+            <div class="ui fluid input field">
+                <input name="password" type="password" v-model="password" th:placeholder="#{Login.password}" @keyup.enter="doLogin"/>
+            </div>
+            <button type="button" class="ui inverted black button" @click="doLogin">
+                <span v-show="isDone" th:text="#{Login.login}"></span>
+                <div class="ui active mini inverted inline loader" v-show="!isDone"></div>
+            </button>
+        </form>
+    </div>
+    <div class="end-tip">
+        <a th:href="@{/}"><i class="angle left icon"></i>Back to opensourcecms</a>
+    </div>
+</div>
+<link th:href="@{/css/login.css}" rel="stylesheet" type="text/css" />
+<script th:src="@{/js/login.js}"></script>
+</body>
+<script>
+    window._message = {
+        account_empty:  '[[#{Login.account_empty}]]',
+        password_wrong: '[[#{Login.password_wrong}]]',
+        login: '[[#{Login.login}]]',
+    };
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Comment} + ' ﹤ Hydro')">
+</head>
+<body>
+    <th:block th:if="${pjaxLoad == null}">
+        <header th:replace="@{admin/common/main} :: adminHeader"></header>
+        <aside th:replace="@{admin/common/main} :: adminSide(#{Comment})"></aside>
+    </th:block>
+    <section>
+        <link th:href="@{/css/article/articlecategories.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large inline header" th:text="#{Comment}"></div>
+            <table class="ui single line table">
+                <thead>
+                    <tr class="center aligned">
+                        <th class="left aligned">笔者</th>
+                        <th class="left aligned">回复内容</th>
+                        <th>文章</th>
+                        <th>日期</th>
+                        <th class="two wide">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr class="center aligned">
+                    <td class="left aligned">Athena</td>
+                    <td class="left aligned">Hi, this is a comment.</td>
+                    <td>论设计模式</td>
+                    <td>2019/02/23</td>
+                    <td>
+                        <div class="ui tiny buttons">
+                            <button class="ui positive button">回复</button>
+                            <button class="ui negative button">删除</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+        </script>
+    </section>
+</body>
+</html>

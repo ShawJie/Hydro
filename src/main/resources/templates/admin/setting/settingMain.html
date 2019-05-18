@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Setting} + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Setting})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/setting/settingMain.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui large inline header" th:text="#{Setting}"></div>
+            <div class="ui grid">
+                <form class="ui form eight wide column">
+                    <h4 class="ui dividing header" th:text="#{Setting.system_setting}"></h4>
+                    <div class="inline field">
+                        <label th:text="#{Setting.site_title}"></label>
+                        <input type="text" name="siteTitle" v-model="systemSettingClone.SiteTitle">
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.site_tagLine}"></label>
+                        <input type="text" name="tagLine" v-model="systemSettingClone.TagLine">
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.language}"></label>
+                        <select v-model="systemSettingClone.Language">
+                            <option value="">Default</option>
+                            <option value="zh-CN">简体中文(Simplified Chinese)</option>
+                            <option value="en-US">English(United Sates)</option>
+                        </select>
+                    </div>
+                    <h4 class="ui dividing header" th:text="#{Setting.personal_set}"></h4>
+                    <div class="inline field">
+                        <label th:text="#{Setting.username}"></label>
+                        <input type="text" v-model="ownerInfo.userName">
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.avator}"></label>
+                        <input type="text" v-model="ownerInfo.avator" @focus="avatorTip = true" @blur="avatorTip = false">
+                        <div class="ui left pointing basic label" v-if="avatorTip" th:text="#{Setting.avator_tip}"></div>
+                        <div class="head-img-preview" v-show="headImg">
+                            <img :src="headImg"/>
+                        </div>
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.github}"></label>
+                        <input type="text" v-model="ownerInfo.github">
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.email}"></label>
+                        <input type="text" v-model="ownerInfo.email">
+                    </div>
+                    <div class="inline field">
+                        <label th:text="#{Setting.set_new_password}"></label>
+                        <input type="password" minlength="6" name="password" v-model="ownerInfo.password">
+                    </div>
+                    <button type="button" class="ui blue button" @click="customModal.show()" th:text="#{Setting.custom_data}"></button>
+                    <button type="button" class="ui button green" @click="checkForSubmit" th:text="#{common.save}"></button>
+                </form>
+            </div>
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header" th:text="#{Setting.custom_data}"></div>
+                <div class="data-push content">
+                    <div class="ui form">
+                        <div class="inline fields">
+                            <div class="eight wide field">
+                                <label th:text="#{Setting.custom_setting}"></label>
+                                <input type="text" th:placeholder="#{common.key}" v-model="customSet.itemName">
+                            </div>
+                            <div class="six wide field">
+                                <input type="text" th:placeholder="#{common.value}" v-model="customSet.itemValue">
+                            </div>
+                            <div class="two wide field">
+                                <div class="ui buttons">
+                                    <button class="ui button green basic" v-if="!customSet.id" @click="addCustomSet" th:text="#{common.add}"></button>
+                                    <button class="ui button blue basic" v-else @click="editCustomSet" th:text="#{common.edit}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-data scrolling content">
+                    <table class="ui basic table">
+                        <thead>
+                            <tr>
+                                <th class="six wide" th:text="#{common.key}"></th>
+                                <th class="six wide" th:text="#{common.value}"></th>
+                                <th th:text="#{common.operate}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(val, key) in customSetting">
+                                <td>{{key}}</td>
+                                <td>{{val.itemValue}}</td>
+                                <td>
+                                    <div class="ui buttons">
+                                        <button class="ui button basic blue" @click="appendToForm(val)" th:text="#{common.edit}"></button>
+                                        <button class="ui button basic red" @click="deleteCustomSet(val)" th:text="#{common.delete}"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                username_empty: '[[#{Setting.username_empty}]]',
+                avator_empty: '[[#{Setting.avator_empty}]]',
+                password_less_six: '[[#{Setting.password_less_six}]]',
+                key_empty: '[[#{Setting.key_empty}]]'
+            }
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script th:src="@{/js/setting/settingMain.js}"></script>
+</th:block>
+</body>
+</html>

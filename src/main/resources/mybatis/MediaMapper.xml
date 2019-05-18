@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sfan.hydro.dao.MediaDao">
+    <resultMap id="MediaMapper" type="com.sfan.hydro.domain.model.Media">
+        <id column="Id" property="id" jdbcType="INTEGER" />
+        <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+        <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+        <result column="upload_date" property="uploadDate" jdbcType="DATE"/>
+        <result column="file_type" property="fileType" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="fields">
+        Id, file_name, file_path, upload_date,
+        file_type, description
+    </sql>
+
+    <sql id="tableName">
+        HY_MEDIA
+    </sql>
+
+    <insert id="saveMedia" parameterType="com.sfan.hydro.domain.model.Media" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO <include refid="tableName"/> ( <include refid="fields"/> )
+        VALUES (
+          default, #{fileName}, #{filePath}, #{uploadDate}, #{fileType}, #{description}
+        )
+    </insert>
+
+    <update id="updateMedia" parameterType="com.sfan.hydro.domain.model.Media">
+        UPDATE <include refid="tableName"/> SET
+        <trim suffix="WHERE id = #{id}" suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">
+                file_name = #{fileName},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteMedia" parameterType="java.lang.Integer">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id = #{_parameter}
+    </delete>
+
+    <delete id="deleteMediaByIdList" parameterType="java.util.Collection">
+        DELETE FROM <include refid="tableName"/>
+        <foreach collection="collection" item="id" separator="," open="WHERE id IN (" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="listMedia" parameterType="com.sfan.hydro.domain.model.Media" resultMap="MediaMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                AND file_name LIKE concat('%', #{fileName}, '%')
+            </if>
+            <if test="uploadDate != null">
+                AND DATE_FORMAT(upload_date,'%Y%m%d') = DATE_FORMAT(#{uploadDate},'%Y%m%d')
+            </if>
+            <if test="fileType != null">
+                AND file_type LIKE concat('%', #{fileType}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listMediaBySkip" parameterType="java.util.Map" resultMap="MediaMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        <where>
+            <if test="fileName != null and fileName != ''">
+                AND file_name LIKE concat('%', #{fileName}, '%')
+            </if>
+        </where>
+        ORDER BY upload_date DESC LIMIT #{skipCount},#{loadCount}
+    </select>
+
+    <select id="countMedia" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(0) as count FROM <include refid="tableName"/>
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                AND file_name LIKE concat('%', #{_parameter}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listMediaByIds"  parameterType="java.util.Collection" resultMap="MediaMapper">
+        SELECT <include refid="fields"/> FROM <include refid="tableName"/>
+        <foreach collection="collection" item="id" separator="," open="WHERE id IN (" close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

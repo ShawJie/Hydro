@@ -1,0 +1,25 @@
+.head-img-preview{
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+.head-img-preview > img{
+    width: 100%;
+    height: 100%;
+}
+
+.main-layout .field > label{
+    width: 20% !important;
+}
+
+.main-layout .field > input, .main-layout .field > select{
+    width: 40% !important;
+}
+
+.data-push{
+    padding-bottom: 0 !important;
+}
