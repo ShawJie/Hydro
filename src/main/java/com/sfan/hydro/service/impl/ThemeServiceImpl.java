@@ -1,3 +1,5 @@
+
+
 package com.sfan.hydro.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,7 +103,6 @@ public class ThemeServiceImpl implements ThemeService {
             Map<String, String> routeMap = new HashMap();
             Map<String, String> optionMap = new HashMap<>();
 
-            ObjectMapper mapper = new ObjectMapper();
             themeProperties.forEach((k ,v) -> {
                 if(k.startsWith("Route.")){
                     routeMap.put(k.replace(ROUTE_PREFIX, ""), v);

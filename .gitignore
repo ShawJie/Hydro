@@ -1,6 +1,9 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### ignore file in custom
+/custom/**
+
 ### STS ###
 .apt_generated
 .classpath
