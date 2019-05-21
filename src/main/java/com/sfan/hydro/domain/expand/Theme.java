@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class Theme{
 
+    private String themeName;
     private String themePath;
     private String creator;
     private String description;
-    private String themeName;
     private String rendering;
     private boolean current;
     private Map<String, String> route;

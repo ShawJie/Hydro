@@ -2,8 +2,8 @@
 
 package com.sfan.hydro.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sfan.hydro.attach.MessagesResource;
+import com.sfan.hydro.domain.enumerate.FileType;
 import com.sfan.hydro.domain.expand.Theme;
 import com.sfan.hydro.service.ThemeService;
 import com.sfan.hydro.util.FileUtil;
@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.util.ResourceUtils;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.annotation.PostConstruct;

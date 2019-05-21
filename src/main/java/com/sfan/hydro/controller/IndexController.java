@@ -1,11 +1,10 @@
 package com.sfan.hydro.controller;
 
+import com.sfan.hydro.attach.HydroNotFoundException;
 import com.sfan.hydro.domain.DTO.CustomPageDTO;
 import com.sfan.hydro.domain.enumerate.FileType;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import com.sfan.hydro.domain.expand.Theme;
-import com.sfan.hydro.domain.enumerate.UserGroup;
-import com.sfan.hydro.domain.model.User;
 import com.sfan.hydro.service.CustomPageService;
 import com.sfan.hydro.service.ThemeService;
 import com.sfan.hydro.service.UserService;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -75,6 +75,6 @@ public class IndexController {
                 return target;
             }
         }
-        return null;
+        throw new HydroNotFoundException();
     }
 }

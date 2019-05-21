@@ -2,6 +2,7 @@ package com.sfan.hydro.config;
 
 import com.sfan.hydro.support.*;
 import com.sfan.hydro.util.pagination.SqlDialect;
+import com.sfan.hydro.util.pagination.dialects.MysqlDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -35,16 +36,17 @@ public class HydroConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interviewInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/**/*.*");
-
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/image/**")
                 .excludePathPatterns("/**/*.js")
                 .excludePathPatterns("/**/*.css");
+
+        registry.addInterceptor(interviewInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/error/**")
+                .excludePathPatterns("/**/*.*");
 
         registry.addInterceptor(pjaxInterceptor)
                 .addPathPatterns("/admin/**")
@@ -58,7 +60,8 @@ public class HydroConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/**/*.css")
                 .excludePathPatterns("/media/**")
                 .excludePathPatterns("/themes/**")
-                .excludePathPatterns("/admin/**");
+                .excludePathPatterns("/admin/**")
+                .excludePathPatterns("/error/**");
     }
 
     @Override
@@ -76,7 +79,7 @@ public class HydroConfiguration implements WebMvcConfigurer {
 
     @Bean
     public SqlDialect sqlDialect(){
-        SqlDialect sqlDialect = (SqlDialect) applicationContext.getBean("mysqlDialect");
+        SqlDialect sqlDialect = new MysqlDialect();
         return sqlDialect;
     }
 

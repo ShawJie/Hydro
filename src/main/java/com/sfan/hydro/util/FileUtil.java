@@ -1,8 +1,6 @@
 package com.sfan.hydro.util;
 
 import com.sfan.hydro.domain.enumerate.FileType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -23,7 +21,7 @@ public class FileUtil {
 		return true;
 	}
 
-	public static File getFile(FileType type, String fileName) throws FileNotFoundException{
+	public static File getFile(FileType type, String fileName){
 		File file = filepathResolver(type.getPath() + fileName);
 		if(file.exists()){
 			return file;

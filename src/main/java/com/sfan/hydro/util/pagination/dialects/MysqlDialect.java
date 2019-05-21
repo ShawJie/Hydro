@@ -2,10 +2,9 @@ package com.sfan.hydro.util.pagination.dialects;
 
 import com.sfan.hydro.domain.expand.PageModel;
 import com.sfan.hydro.util.pagination.SqlDialect;
-import org.springframework.stereotype.Component;
 
-@Component("mysqlDialect")
 public class MysqlDialect implements SqlDialect {
+
 	@Override
 	public boolean supportsPaging() {
 		return true;

@@ -2,10 +2,12 @@ package com.sfan.hydro.support;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sfan.hydro.attach.HydroNotFoundException;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import com.sfan.hydro.domain.expand.Theme;
 import com.sfan.hydro.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +26,7 @@ public class ThemeInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if(response.getHeader("Content-Type") == null) {
-            if (!modelAndView.isEmpty() && modelAndView.hasView()) {
+            if (modelAndView != null && !modelAndView.isEmpty() && modelAndView.hasView()) {
                 if(modelAndView.getModel().get("routeState") != SystemConst.Straight){
                     Theme theme = themeService.getCurrentThemeConfig();
 

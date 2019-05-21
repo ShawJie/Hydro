@@ -6,7 +6,6 @@ import com.sfan.hydro.service.VisitInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.JDBCType;
 import java.util.*;
 
 @Service("visitInfoService")

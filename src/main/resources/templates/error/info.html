@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+    <title>Error Page</title>
+    <style>
+        body{
+            background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .excep-info{
+            position: relative;
+            top: 35vh;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+
+        .excep-info *{
+            color: #fff !important;
+            font-family: "Microsoft YaHei UI Light";
+        }
+
+        .excep-info > .header{
+            font-weight: lighter;
+            text-align: center;
+            font-size: 10rem !important;
+        }
+
+        .excep-info .header > .sub.header{
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui container">
+        <div class="ui segment basic ">
+            <div class="excep-info">
+                <div class="ui header">
+                    <span class="content">OOPS!</span>
+                    <div class="sub header">- {{errorMsg}} -</div>
+                </div>
+                <div class="ui button orange" @click="backToHome">BACK TO HOME PAGE</div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:inline="javascript">
+    var exceptionType = /*[[${exceptionType}]]*/ null;
+</script>
+<script>
+    var errorPageVm = new Vue({
+        el: '.excep-info',
+        data: {
+            statusCode: 0,
+            statusMsg: {
+                404: "404 - PAGE NOT FOUND",
+                500: "500 - SORRY, IT'S ME, NOT YOU"
+            }
+        },
+        mounted: function () {
+            this.statusCode = exceptionType;
+            document.getElementsByTagName('title')[0].innerHTML = this.statusMsg[exceptionType];
+        },
+        methods: {
+            backToHome: function () {
+                window.location.pathname = "/"
+            }
+        },
+        computed: {
+            errorMsg: function () {
+                return this.statusMsg[this.statusCode];
+            }
+        }
+    });
+</script>
+</html>

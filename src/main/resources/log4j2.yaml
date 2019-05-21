@@ -37,7 +37,7 @@ Configutation:
 
     Logger:
       - name: com.sfan.hydro.logger
-        additivity: false
+        additivity: true
         level: trace
         AppenderRef:
           - ref: File_Appender

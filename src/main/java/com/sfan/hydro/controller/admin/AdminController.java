@@ -1,6 +1,5 @@
 package com.sfan.hydro.controller.admin;
 
-import com.sfan.hydro.domain.DTO.UserDTO;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import com.sfan.hydro.domain.expand.ResponseModel;
 import com.sfan.hydro.domain.model.User;
