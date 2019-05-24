@@ -29,12 +29,12 @@
                     <div class="sub header">{{createDate}}</div>
                 </div>
                 <div class="ui list horizontal divided">
-                    <div class="item">
+                    <div class="item" v-if="post.category.categoryName">
                         <a class="ui label orange basic" :href="'/posts?cid=' + post.category.id">
                             {{post.category.categoryName}}
                         </a>
                     </div>
-                    <div class="item">
+                    <div class="item" v-if="post.tagList.length > 0">
                         <a class="ui label basic" v-for="tag in post.tagList" :href="'/posts?tid=' + tag.id">
                             {{tag.tagName}}
                         </a>

@@ -87,10 +87,11 @@ public class ArticleController {
     @ResponseBody
     public ResponseModel articleSave(HttpServletRequest request, String markdownContent, String htmlContent, Article article) {
         User user = (User)request.getSession().getAttribute(SystemConst.User.getVal());
-        Optional.ofNullable(article.getId()).ifPresentOrElse(id -> {
+        Optional.ofNullable(article.getId()).ifPresentOrElse(id -> articleService.updateArticle(article, markdownContent, htmlContent)
+        , () -> {
             article.setAuthorId(user.getId());
             articleService.saveArticle(article, markdownContent, htmlContent);
-        }, () -> articleService.updateArticle(article, markdownContent, htmlContent));
+        });
         tagService.saveArticleTagRelation(article);
 
         return new ResponseModel(true, messagesResource.getMessage("Article.add.publish_success"), article);

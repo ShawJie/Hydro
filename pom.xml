@@ -16,7 +16,8 @@
 
     <properties>
         <java.version>11</java.version>
-        <outputDirectory>/build</outputDirectory>
+        <outputDirectory>${project.build.directory}/build</outputDirectory>
+        <hydro-version>0.0.1</hydro-version>
     </properties>
 
     <dependencies>
@@ -87,7 +88,16 @@
     </dependencies>
 
     <build>
+        <finalName>hydro-${hydro-version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -98,8 +108,10 @@
                         <exclude>/mybatis/**</exclude>
                         <exclude>/static/**</exclude>
                         <exclude>/templates/**</exclude>
+                        <exclude>/configuration/**</exclude>
                         <exclude>*.properties</exclude>
                         <exclude>*.yaml</exclude>
+                        <exclude>*.bat</exclude>
                     </excludes>
                     <archive>
                         <manifest>
@@ -112,10 +124,10 @@
                             <Class-Path>./resources/</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <outputDirectory>${project.build.directory}${outputDirectory}</outputDirectory>
+                    <outputDirectory>${outputDirectory}</outputDirectory>
                 </configuration>
             </plugin>
-            <!-- Copy the resources -->
+            <!-- Copy the dependency -->
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -126,12 +138,12 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}${outputDirectory}/lib/</outputDirectory>
+                            <outputDirectory>${outputDirectory}/lib/</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!-- copy the dependency -->
+            <!-- copy the resources -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
@@ -145,9 +157,65 @@
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
+                                    <excludes>
+                                        <exclude>/configuration/custom/</exclude>
+                                        <exclude>hydro-config.yaml</exclude>
+                                        <exclude>setup.bat</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
-                            <outputDirectory>${project.build.directory}${outputDirectory}/resources/</outputDirectory>
+                            <outputDirectory>${outputDirectory}/resources/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resource</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>hydro-config.yaml</include>
+                                        <include>setup.bat</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${outputDirectory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>initialData</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/configuration</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>custom/**</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${outputDirectory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -165,7 +233,7 @@
                     </includes>
                     <layout>ZIP</layout>
                     <addResources>true</addResources>
-                    <outputDirectory>${project.build.directory}${outputDirectory}</outputDirectory>
+                    <outputDirectory>${outputDirectory}</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>

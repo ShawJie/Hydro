@@ -1,6 +1,6 @@
 window.noty = function (type, text, option) {
     option = option == undefined ? {} : option;
-    var n = new Noty({
+    let n = new Noty({
         theme: 'sunset',
         type: type,
         text: text,

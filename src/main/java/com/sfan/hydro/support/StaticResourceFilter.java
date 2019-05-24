@@ -4,6 +4,7 @@ import com.sfan.hydro.domain.expand.Theme;
 import com.sfan.hydro.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-@WebFilter(urlPatterns = "/*", filterName = "staticResourceFilter")
+@WebFilter(filterName = "staticResourceFilter", urlPatterns = "/*")
 public class StaticResourceFilter implements Filter {
 
     private List<String> excludePathPatterns;
@@ -44,8 +45,8 @@ public class StaticResourceFilter implements Filter {
         if(referer != null){
             URL url = new URL((referer.endsWith("/") ? referer.substring(0, referer.length() - 1) : referer ) + request.getRequestURI());
             boolean isTouristPage = excludePathPatterns.stream().filter(pattern -> pathMatcher.match(pattern.trim(), url.getPath())).count() == 0;
-            Theme theme = themeService.getCurrentThemeConfig();
             if(isTouristPage){
+                Theme theme = themeService.getCurrentThemeConfig();
                 // this request is send by main page
                 final String uri = request.getRequestURI();
                 boolean isLimitType = includeFileType.stream().filter(type -> uri.endsWith(type.trim())).count() > 0;
@@ -66,7 +67,7 @@ public class StaticResourceFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         properties = new Properties();
         try {
-            properties.load(new ClassPathResource("webSiteConfig.properties").getInputStream());
+            properties.load(new ClassPathResource("configuration/webSiteConfig.properties").getInputStream());
         }catch (IOException e){
             e.printStackTrace();
             throw new RuntimeException("initial StaticResourceFilter failed");

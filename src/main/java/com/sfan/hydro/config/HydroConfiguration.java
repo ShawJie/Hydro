@@ -4,6 +4,8 @@ import com.sfan.hydro.support.*;
 import com.sfan.hydro.util.pagination.SqlDialect;
 import com.sfan.hydro.util.pagination.dialects.MysqlDialect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cglib.core.Block;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
 import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebFilter;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
@@ -32,6 +35,8 @@ public class HydroConfiguration implements WebMvcConfigurer {
     @Autowired
     private InterviewInterceptor interviewInterceptor;
     @Autowired
+    private BlockInitialInterceptor initialInterceptor;
+    @Autowired
     private CustomLocaleResolver localeResolver;
 
     @Override
@@ -46,6 +51,7 @@ public class HydroConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(interviewInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/error/**")
+                .excludePathPatterns("/initial/**")
                 .excludePathPatterns("/**/*.*");
 
         registry.addInterceptor(pjaxInterceptor)
@@ -55,9 +61,14 @@ public class HydroConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/**/*.js")
                 .excludePathPatterns("/**/*.css");
 
+        registry.addInterceptor(initialInterceptor)
+                .addPathPatterns("/initial/**")
+                .excludePathPatterns("/**/*.*");
+
         registry.addInterceptor(themeInterceptor)
                 .excludePathPatterns("/**/*.js")
                 .excludePathPatterns("/**/*.css")
+                .excludePathPatterns("/initial/**")
                 .excludePathPatterns("/media/**")
                 .excludePathPatterns("/themes/**")
                 .excludePathPatterns("/admin/**")

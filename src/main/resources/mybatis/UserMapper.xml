@@ -9,7 +9,7 @@
         <result column="avator" property="avator" jdbcType="VARCHAR" />
         <result column="email" property="email" jdbcType="VARCHAR" />
         <result column="github" property="github" jdbcType="VARCHAR" />
-        <result column="activated" property="activated" jdbcType="TINYINT" />
+        <result column="activated" property="isActivated" jdbcType="TINYINT" />
         <result column="group_set" property="groupSet" jdbcType="VARCHAR" />
         <result column="last_login_date" property="lastLoginDate" jdbcType="TIMESTAMP" />
     </resultMap>
@@ -22,11 +22,11 @@
     <sql id="tableName">HY_USER</sql>
     
     <insert id="saveUser" parameterType="com.sfan.hydro.domain.model.User">
-    	INSERT <include refid="tableName"/>(<include refid="Columns"/>)
-    	INTO VALUES(
+    	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)
+    	VALUES(
     		default, #{userName}, #{account},
-    		#{password}, #{email}, #{github},
-    		#{avator}, #{activanted},
+    		#{password}, #{avator}, #{email},
+			#{github}, #{isActivated},
     		#{groupSet}, #{lastLoginDate}
     	)
     </insert>
@@ -38,7 +38,8 @@
     		<if test="userName != null and userName != ''">user_name = #{userName},</if>
 	    	<if test="account != null and account != ''">account = #{account},</if>
 	    	<if test="password != null and password != ''">password = #{password},</if>
-	    	<if test="activated != null">activated = #{activated},</if>
+	    	<if test="avator != null and avator != ''">avator = #{avator},</if>
+	    	<if test="isActivated != null">activated = #{isActivated},</if>
 	    	<if test="groupSet != null">group_set = #{groupSet},</if>
 	    	<if test="lastLoginDate != null">last_login_date = #{lastLoginDate},</if>
     	</trim>
@@ -61,7 +62,7 @@
     		<if test="userName != null">AND user_name = #{userName}</if>
 	    	<if test="account != null">AND account = #{account}</if>
 	    	<if test="password != null">AND password = #{password}</if>
-	    	<if test="activated != null">AND activated = #{activated}</if>
+	    	<if test="isActivated != null">AND activated = #{isActivated}</if>
 	    	<if test="groupSet != null">AND group_set = #{groupSet}</if>
     	</where>
     </select>

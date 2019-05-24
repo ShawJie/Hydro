@@ -34,12 +34,13 @@ Configutation:
       level: info
       AppenderRef:
         - ref: Console_Appender
+        - ref: File_Appender
 
     Logger:
-      - name: com.sfan.hydro.logger
-        additivity: true
-        level: trace
-        AppenderRef:
-          - ref: File_Appender
+##      - name: com.sfan.hydro.logger
+##        additivity: true
+##        level: trace
+##        AppenderRef:
+##          - ref: File_Appender
       - name: org.springframework
         level: info

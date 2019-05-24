@@ -1,9 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/hydrogen?characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
-    username: root
-    password: "0621"
-    driver-class-name: com.mysql.jdbc.Driver
+##   datasource:
+##    url: jdbc:mysql://127.0.0.1:3306/hydrogen?characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
+##    username: root
+##    password: "0621"
+##    driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
     cache: false
     prefix: classpath:/templates/

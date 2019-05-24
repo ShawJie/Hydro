@@ -28,7 +28,7 @@ public class CustomLocaleResolver implements LocaleResolver {
 
     @PostConstruct
     public void loadProp(){
-        resource = new ClassPathResource("webSiteConfig.properties");
+        resource = new ClassPathResource("configuration/webSiteConfig.properties");
         prop = new Properties();
         try {
             prop.load(resource.getInputStream());

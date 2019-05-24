@@ -12,6 +12,7 @@ import com.sfan.hydro.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -24,16 +25,22 @@ import java.util.regex.Pattern;
 @RestController
 public class ApiController {
 
-    @Autowired
     private UserService userService;
-    @Autowired
     private ArticleService articleService;
-    @Autowired
     private CategoryService categoryService;
-    @Autowired
     private TagService tagService;
-    @Autowired
     private SettingService settingService;
+
+    @Lazy
+    @Autowired
+    public ApiController(UserService userService, ArticleService articleService,
+                         CategoryService categoryService, TagService tagService, SettingService settingService) {
+        this.userService = userService;
+        this.articleService = articleService;
+        this.categoryService = categoryService;
+        this.tagService = tagService;
+        this.settingService = settingService;
+    }
 
     private final String OK_MSG = "OK";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdn.bootcss.com/noty/3.1.4/noty.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/noty/3.1.4/noty.css" rel="stylesheet">
+    <link href="/css/initial/initialProcess.css" rel="stylesheet"/>
+    <link rel="shortcut icon" th:href="@{/image/icon.ico}" type="image/x-icon">
+    <title th:text="#{initial}"></title>
+</head>
+<body>
+    <header>
+        <h1 class="ui header center aligned top-alert">Hydro Blob Setup</h1>
+    </header>
+    <main>
+        <div class="ui container center aligned info-content">
+            <div class="ui steps">
+                <div class="step active" :class="{active: currentStep == 0}">
+                    <i class="chess yellow icon"></i>
+                    <div class="content">
+                        <div class="title">SignUp</div>
+                        <div class="description">
+                            SignUp a user, to start your blog lift
+                        </div>
+                    </div>
+                </div>
+                <div class="step" :class="{active: currentStep == 1}">
+                    <i class="info blue icon"></i>
+                    <div class="content">
+                        <div class="title">Fill Information</div>
+                        <div class="description">
+                            Fill your information, let people aware you
+                        </div>
+                    </div>
+                </div>
+                <div class="step" :class="{active: currentStep == 2}">
+                    <i class="envira green icon"></i>
+                    <div class="content">
+                        <div class="title">Finish</div>
+                        <div class="description">
+                            You have done all the things, ready to start
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui compact left aligned segment" v-show="currentStep == 0">
+                <div class="ui form account-info">
+                    <div class="field">
+                        <label>Account</label>
+                        <input name="account" v-model="user.account">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input name="password" type="password" v-model="user.password">
+                    </div>
+                </div>
+            </div>
+            <div class="ui compact left aligned segment" v-show="currentStep == 1">
+                <div class="ui form user-info">
+                    <div class="field">
+                        <label>Username</label>
+                        <input name="username" v-model="user.userName">
+                    </div>
+                    <div class="field">
+                        <label>Email address</label>
+                        <input name="email" v-model="user.email">
+                    </div>
+                    <div class="field">
+                        <label>Github address</label>
+                        <input name="github" v-model="user.github">
+                    </div>
+                </div>
+            </div>
+            <div class="ui compact left aligned segment" v-show="currentStep == 2">
+                <div class="ui header green">
+                    <i class="thumbs up outline icon"></i>
+                    You have fill all info, chick finish to start
+                </div>
+            </div>
+            <div class="ui buttons">
+                <div class="ui yellow button" v-show="currentStep > 0" @click="prevStep">Pre Step</div>
+                <div class="ui blue button" v-show="currentStep < 2" @click="nextStep">Next Step</div>
+                <div class="ui green button" v-show="currentStep == 2" @click="submit">Finish</div>
+            </div>
+        </div>
+    </main>
+    <script src="/js/initial/initialProcess.js"></script>
+</body>
+</html>

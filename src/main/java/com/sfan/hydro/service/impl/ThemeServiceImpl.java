@@ -3,7 +3,6 @@
 package com.sfan.hydro.service.impl;
 
 import com.sfan.hydro.attach.MessagesResource;
-import com.sfan.hydro.domain.enumerate.FileType;
 import com.sfan.hydro.domain.expand.Theme;
 import com.sfan.hydro.service.ThemeService;
 import com.sfan.hydro.util.FileUtil;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@Service("ThemeService")
+@Service("themeService")
 public class ThemeServiceImpl implements ThemeService {
 
     private static Theme currentTheme;
@@ -33,7 +32,7 @@ public class ThemeServiceImpl implements ThemeService {
     private final String[] THEME_FILE_REQUIRE_FIELD = {"Name", "Creator", "Description", "Rendering", "Route.Index", "Route.post.detail"};
 
     private Properties config = new Properties();
-    private Resource configResource = new ClassPathResource("webSiteConfig.properties");
+    private Resource configResource = new ClassPathResource("configuration/webSiteConfig.properties");
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -203,7 +202,7 @@ public class ThemeServiceImpl implements ThemeService {
         config.setProperty("Theme.Name", theme.getThemeName());
         config.setProperty("Theme.Path", theme.getThemePath());
 
-        FileOutputStream fos = new FileOutputStream(FileUtil.filepathResolver("classpath:" + configResource.getFilename()));
+        FileOutputStream fos = new FileOutputStream(configResource.getFile());
         config.store(fos, null);
         fos.close();
     }

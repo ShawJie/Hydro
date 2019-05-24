@@ -11,7 +11,7 @@ public class User {
 	private String email;
 	private String github;
 	private String avator;
-	private boolean activated = true;
+	private boolean isActivated = true;
 	private String groupSet;
 	private Date lastLoginDate;
 	
@@ -52,10 +52,10 @@ public class User {
 		this.id = id;
 	}
 	public boolean isActivated() {
-		return activated;
+		return isActivated;
 	}
 	public void setActivated(boolean activated) {
-		this.activated = activated;
+		isActivated = activated;
 	}
 	public Date getLastLoginDate() {
 		return lastLoginDate;

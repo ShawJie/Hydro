@@ -1,6 +1,7 @@
 package com.sfan.hydro.domain.enumerate;
 
 public enum FileType {
+	ClassPathOrigin (0, "classpath:"),
 	Article (1, "custom/article/"),
 	Image(2, "custom/image/"),
 	Theme(3, "classpath:templates/themes/"),

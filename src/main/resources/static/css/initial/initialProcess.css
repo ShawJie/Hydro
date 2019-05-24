@@ -1,0 +1,21 @@
+body{
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+}
+
+.top-alert{
+    padding-top: 10vh !important;
+    color: #ffffff !important;
+    margin-bottom: 2rem !important;
+}
+
+.info-content{
+    overflow: hidden;
+}
+
+.info-content > .segment{
+    margin: 1rem auto !important;
+}
+
+.info-content .field{
+    width: 25rem !important;
+}

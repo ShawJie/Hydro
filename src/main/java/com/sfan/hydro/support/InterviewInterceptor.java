@@ -5,6 +5,7 @@ import com.sfan.hydro.service.VisitInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,6 +22,7 @@ public class InterviewInterceptor implements HandlerInterceptor {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Lazy
     @Autowired
     private VisitInfoService visitInfoService;
 
