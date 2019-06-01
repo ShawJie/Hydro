@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Archives - Hydro</title>
@@ -13,7 +13,7 @@
 </head>
 <body>
     <aside>
-        <top-menu th:about-path="${About_Link}"></top-menu>
+        <top-menu th:about-path="${option.About_Link}"></top-menu>
     </aside>
     <main>
         <div class="ui container">
@@ -30,7 +30,7 @@
                             <div class="tiny point"></div>
                             <span class="ui header tiny">{{monthDate}}</span>
                             <div class="ui segment basic">
-                                <div class="ui list link horizontal" v-for="post in posts">
+                                <div class="ui list very relaxed link horizontal" v-for="post in posts">
                                     <a class="item" :href="'/post/' + post.id">{{post.title}}</a>
                                 </div>
                             </div>

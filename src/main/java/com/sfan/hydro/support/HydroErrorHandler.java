@@ -13,15 +13,15 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class HydroErrorHandler {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(HydroErrorHandler.class);
 
     private final String ERROR_PAGE = "error/info";
 
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.OK)
     public String processException(Model model, RuntimeException exception){
-        logger.error("Exception", exception);
-        model.addAttribute("exceptionType", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        logger.error("Has occur a error", exception);
+        model.addAttribute("exceptionType", HttpStatus.INTERNAL_SERVER_ERROR);
         return ERROR_PAGE;
     }
 
@@ -29,7 +29,7 @@ public class HydroErrorHandler {
     @ResponseStatus(HttpStatus.OK)
     public String processException(Model model, Exception exception){
         logger.error("Not found", exception);
-        model.addAttribute("exceptionType", HttpStatus.NOT_FOUND.value());
+        model.addAttribute("exceptionType", HttpStatus.NOT_FOUND);
         return ERROR_PAGE;
     }
 }

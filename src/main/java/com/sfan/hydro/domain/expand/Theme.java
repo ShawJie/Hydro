@@ -9,6 +9,7 @@ public class Theme{
     private String creator;
     private String description;
     private String rendering;
+    private String customWrapper;
     private boolean current;
     private Map<String, String> route;
     private Map<String, String> option;
@@ -60,6 +61,12 @@ public class Theme{
     }
     public void setOption(Map<String, String> option) {
         this.option = option;
+    }
+    public String getCustomWrapper() {
+        return customWrapper;
+    }
+    public void setCustomWrapper(String customWrapper) {
+        this.customWrapper = customWrapper;
     }
 
     public Theme(){}

@@ -54,11 +54,13 @@ var slideBarVm = new Vue({
                 oldTarget.className = classList.join(" ");
             }
             let link = this.links[path];
-            link.target.className += ' active';
-            if(link.parentNode != this.$el && this.currentLink == null){
-                $(link.parentNode).transition('swing down', '500ms');
+            if(link != undefined){
+                link.target.className += ' active';
+                if(link.parentNode != this.$el && this.currentLink == null){
+                    $(link.parentNode).transition('swing down', '500ms');
+                }
+                this.currentLink = path;
             }
-            this.currentLink = path;
         },
         toggleMenu: function (event) {
             let menu = event.target.nextElementSibling;
@@ -71,8 +73,9 @@ var slideBarVm = new Vue({
         pjaxBeforeSend: function () {
             let dimmer = document.createElement('div');
             dimmer.className = 'dimmer';
-            dimmer.innerHTML = "<div class='ui active centered inline loader'></div>"
-            document.getElementsByTagName('section')[0].insertBefore(dimmer, null);
+            dimmer.innerHTML = "<div class='ui active centered inline loader'></div>";
+            let beforeTarget = document.getElementsByTagName('section')[0];
+            document.getElementsByTagName('body')[0].insertBefore(dimmer, beforeTarget);
         },
         pjaxRequestComplete: function (xhr) {
             window.hydro.loadScripts(xhr.delegateTarget.URL).then(function () {

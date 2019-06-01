@@ -13,10 +13,10 @@
                 <a class="ui dropdown item author-head">
                     <img th:src="${session.author.avator}"/>
                     <div class="menu">
-                        <div class="header" th:text="|Howdy,${session.author.userName}|"></div>
+                        <div class="header" th:text="#{aside.howdy(${session.author.userName})}"></div>
                         <div class="divider"></div>
-                        <div class="item" @click="jumpToSetting"><i class="info icon"></i>Account Info</div>
-                        <div class="item" @click="logout"><i class="sign-out icon"></i>Exit</div>
+                        <div class="item" @click="jumpToSetting"><i class="info icon"></i><th:block th:text="#{aside.account_info}"></th:block></div>
+                        <div class="item" @click="logout"><i class="sign-out icon"></i><th:block th:text="#{aside.exit}"></th:block></div>
                     </div>
                 </a>
             </div>
@@ -52,7 +52,16 @@
                 </div>
             </div>
             <a class="item" href="/admin/theme" th:text="#{Theme}"></a>
-            <a class="item" href="/admin/setting" th:text="#{Setting}"></a>
+            <div class="item">
+                <div class="text-label">
+                    <span th:text="#{Setting}"></span>
+                    <i class="angle down icon"></i>
+                </div>
+                <div class="menu">
+                    <a class="item" href="/admin/setting" th:text="#{Setting.system_setting}"></a>
+                    <a class="item" href="/admin/setting/about" th:text="#{Setting.system_about}"></a>
+                </div>
+            </div>
         </div>
         <script th:src="@{/js/layout.js}"></script>
     </aside>

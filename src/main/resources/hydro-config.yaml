@@ -1,11 +1,16 @@
 database:
   ## 这里输入数据库名
-  name:
+  name: hydrogen
+  ##@database.name@
   ## 这里输入数据库地址
-  host:
+  host: 127.0.0.1
+  ##@database.host@
   ## 这里输入数据库端口
-  port:
+  port: 3306
+  ##@database.port@
   ## 输入数据库账号和密码
   ## 密码若为0开头则需要写在引号中 example: "0000"
-  userName:
-  password:
+  userName: root
+  ##@database.user@
+  password: "0621"
+  ##@database.pwd@

@@ -89,7 +89,7 @@ public class ThemeController {
         }else{
             return new ResponseModel(false,  messagesResource.getMessage("Theme.can_not_found"), null);
         }
-        return new ResponseModel(true,  messagesResource.getMessage("Theme.delete_success"), null);
+        return new ResponseModel(true,  messagesResource.getMessage("Theme.delete_success", theme.getThemeName()), null);
     }
 
     @RequestMapping(value = "/saveOption", method = RequestMethod.POST)

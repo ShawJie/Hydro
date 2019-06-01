@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/image/icon.ico" type="image/x-icon">
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="source/css/main.css">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <aside>
+        <top-menu th:about-path="${option.About_Link}"></top-menu>
+    </aside>
+    <main>
+        <div class="ui container">
+            <th:block th:utext="${content}"></th:block>
+        </div>
+    </main>
+    <script src="source/js/main.js"></script>
+</body>
+</html>

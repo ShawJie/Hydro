@@ -1,1 +1,0 @@
-java -jar -Dloader.path=.,"hydro-config.yaml" -Dfile.encoding=utf-8 hydro-0.0.1.jar

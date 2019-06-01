@@ -1,5 +1,8 @@
 var articleAddVm = new Vue({
     el: document.getElementsByClassName('main-layout')[0],
+    components: {
+        "markdown-editor": markdown
+    },
     data: {
         article: {
             id: null,
@@ -9,17 +12,16 @@ var articleAddVm = new Vue({
             publicise: false
         },
         selectedTag: [],
-        markdownEditor: null,
         newTag: '',
-        newCategory: ''
+        newCategory: '',
     },
     mounted: function () {
-        var _self = this;
+        let _self = this;
 
         this.fianlHead = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css" />';
 
         if (articleInfo != null){
-            for(var field in this.article){
+            for(let field in this.article){
                 this.article[field] = articleInfo[field];
             }
 
@@ -27,10 +29,6 @@ var articleAddVm = new Vue({
                 _self.selectedTag.push(e.id.toString());
             });
         }
-
-        this.markdownEditor = new SimpleMDE({
-           element: document.getElementById("markdown-editor"),
-        });
 
         $('.ui.accordion').accordion();
         $("#tags").dropdown({placeholder: window._message.pickup_tags});
@@ -69,13 +67,13 @@ var articleAddVm = new Vue({
             }
         },
         publish: function () {
-            var htmlContent = this.markdownEditor.markdown(this.markdownEditor.value());
+            var htmlContent = this.$refs.pageEditor.getRenderResult();
             var container = document.createElement("div");
             container.className = 'markdown-body';
             container.innerHTML = htmlContent;
 
             var data = $.extend(true, {
-                markdownContent: this.markdownEditor.value(),
+                markdownContent: this.$refs.pageEditor.getResult(),
                 htmlContent: this.fianlHead + container.outerHTML,
             }, this.article);
 
@@ -100,12 +98,12 @@ var articleAddVm = new Vue({
             });
         },
         review: function () {
-            var htmlContent = this.markdownEditor.markdown(this.markdownEditor.value());
-            var container = document.createElement("div");
+            let htmlContent = this.$refs.pageEditor.getRenderResult();
+            let container = document.createElement("div");
             container.className = 'markdown-body';
             container.innerHTML = htmlContent;
 
-            var data = $.extend(true, {
+            let data = $.extend(true, {
                 htmlContent: this.fianlHead + container.outerHTML,
                 categoryText: this.article.categoryId ? $('#category').dropdown('get item', this.article.categoryId).text() : ''
             }, this.article);

@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <h1 class="ui header center aligned top-alert">Hydro Blob Setup</h1>
+        <h1 class="ui header center aligned top-alert" th:text="#{initial.setup}"></h1>
     </header>
     <main>
         <div class="ui container center aligned info-content">
@@ -22,39 +22,33 @@
                 <div class="step active" :class="{active: currentStep == 0}">
                     <i class="chess yellow icon"></i>
                     <div class="content">
-                        <div class="title">SignUp</div>
-                        <div class="description">
-                            SignUp a user, to start your blog lift
-                        </div>
+                        <div class="title" th:text="#{initial.signup}"></div>
+                        <div class="description" th:text="#{initial.signup.tip}"></div>
                     </div>
                 </div>
                 <div class="step" :class="{active: currentStep == 1}">
                     <i class="info blue icon"></i>
                     <div class="content">
-                        <div class="title">Fill Information</div>
-                        <div class="description">
-                            Fill your information, let people aware you
-                        </div>
+                        <div class="title" th:text="#{initial.fill}"></div>
+                        <div class="description" th:text="#{initial.fill.tip}"></div>
                     </div>
                 </div>
                 <div class="step" :class="{active: currentStep == 2}">
                     <i class="envira green icon"></i>
                     <div class="content">
-                        <div class="title">Finish</div>
-                        <div class="description">
-                            You have done all the things, ready to start
-                        </div>
+                        <div class="title" th:text="#{initial.finish}"></div>
+                        <div class="description" th:text="#{initial.finish.tip}"></div>
                     </div>
                 </div>
             </div>
             <div class="ui compact left aligned segment" v-show="currentStep == 0">
                 <div class="ui form account-info">
                     <div class="field">
-                        <label>Account</label>
+                        <label th:text="#{initial.field.account}"></label>
                         <input name="account" v-model="user.account">
                     </div>
                     <div class="field">
-                        <label>Password</label>
+                        <label th:text="#{initial.field.password}"></label>
                         <input name="password" type="password" v-model="user.password">
                     </div>
                 </div>
@@ -62,15 +56,15 @@
             <div class="ui compact left aligned segment" v-show="currentStep == 1">
                 <div class="ui form user-info">
                     <div class="field">
-                        <label>Username</label>
+                        <label th:text="#{initial.field.username}"></label>
                         <input name="username" v-model="user.userName">
                     </div>
                     <div class="field">
-                        <label>Email address</label>
+                        <label th:text="#{initial.field.email}"></label>
                         <input name="email" v-model="user.email">
                     </div>
                     <div class="field">
-                        <label>Github address</label>
+                        <label th:text="#{initial.field.github}"></label>
                         <input name="github" v-model="user.github">
                     </div>
                 </div>
@@ -78,16 +72,25 @@
             <div class="ui compact left aligned segment" v-show="currentStep == 2">
                 <div class="ui header green">
                     <i class="thumbs up outline icon"></i>
-                    You have fill all info, chick finish to start
+                    <th:block th:text="#{initial.finish.description}"></th:block>
                 </div>
             </div>
             <div class="ui buttons">
-                <div class="ui yellow button" v-show="currentStep > 0" @click="prevStep">Pre Step</div>
-                <div class="ui blue button" v-show="currentStep < 2" @click="nextStep">Next Step</div>
-                <div class="ui green button" v-show="currentStep == 2" @click="submit">Finish</div>
+                <div class="ui yellow button" v-show="currentStep > 0" @click="prevStep" th:text="#{initial.prestep}"></div>
+                <div class="ui blue button" v-show="currentStep < 2" @click="nextStep" th:text="#{initial.nextstep}">Next Step</div>
+                <div class="ui green button" v-show="currentStep == 2" @click="submit" th:text="#{initial.finish}"></div>
             </div>
         </div>
     </main>
+    <script>
+        var message = {
+            account_empty: "[[#{initial.account_empty}]]",
+            account_less_charset: "[[#{initial.account_less_five}]]",
+            password_empty: "[[#{initial.password_empty}]]",
+            password_less_charset: "[[#{initial.password_less_six}]]",
+            username_empty: "[[#{initial.username_empty}]]"
+        }
+    </script>
     <script src="/js/initial/initialProcess.js"></script>
 </body>
 </html>

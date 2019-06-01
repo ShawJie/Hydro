@@ -19,15 +19,39 @@ var initialInfoVm = new Vue({
         let _self = this;
         $(this.accountInfo).form({
             fields: {
-                account: ['empty', 'minLength[5]'],
-                password: ['empty', 'minLength[6]']
+                account: {
+                    identifier: 'account',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'account_empty'
+                    }, {
+                        type: 'minLength[5]',
+                        prompt: "account_less_charset"
+                    }],
+                },
+                password: {
+                    identifier: 'password',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'password_empty'
+                    }, {
+                        type: 'minLength[6]',
+                        prompt: 'password_less_charset'
+                    }]
+                }
             },
             onFailure: _self.validate
         });
 
         $(this.userInfo).form({
             fields: {
-                username: 'empty'
+                username: {
+                    identifier: 'username',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'username_empty'
+                    }]
+                }
             },
             onFailure: _self.validate
         });
@@ -60,7 +84,7 @@ var initialInfoVm = new Vue({
                 new Noty({
                     theme: 'sunset',
                     type: 'error',
-                    text: e,
+                    text: message[e],
                     timeout: 4000
                 }).show();
             });

@@ -28,9 +28,7 @@ import java.util.Optional;
 @RequestMapping("/")
 public class IndexController {
 
-    private final String CUSTOM_WAPPER_PAGE = "customPage/pageWrapper";
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     UserService userService;
@@ -54,6 +52,7 @@ public class IndexController {
 
     @RequestMapping(value = "/{route}", method = RequestMethod.GET)
     public String customRoute(Model model, @PathVariable String route){
+        Theme currentTheme = themeService.getCurrentThemeConfig();
         Optional<CustomPageDTO> optional = Optional.ofNullable(customPageService.getReleasedPageByRoute(route, Calendar.getInstance().getTime(), true));
         if(optional.isPresent()){
             CustomPageDTO customPage = optional.get();
@@ -63,18 +62,17 @@ public class IndexController {
             }catch (IOException e){
                 logger.error("Get Custom Page Content failed", e);
             }
-            model.addAttribute("pageName", customPage.getPageName());
-            model.addAttribute("pageContent", pageContent);
-            model.addAttribute("routeState", SystemConst.Straight);
-            return CUSTOM_WAPPER_PAGE;
+            model.addAttribute("title", customPage.getPageName());
+            model.addAttribute("content", pageContent);
+            return currentTheme.getCustomWrapper();
         }else{
-            Theme currentTheme = themeService.getCurrentThemeConfig();
             Map<String, String> routeMap = currentTheme.getRoute();
             String target;
             if((target = routeMap.get(route)) != null){
                 return target;
             }
         }
+        logger.error("cannot find the request path with '{}'", route);
         throw new HydroNotFoundException();
     }
 }

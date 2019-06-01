@@ -1,22 +1,18 @@
 var pageAddVm = new Vue({
     el: document.getElementsByClassName('main-layout')[0],
+    components: {
+        "markdown-editor": markdown
+    },
     data: {
         customPage: {
             id: null,
             pageName: '',
             routePath: '',
         },
-        markdownEditor: null,
         webSitePath: '',
-        routePathExists: false
+        routePathExists: false,
     },
     mounted: function () {
-        this.markdownEditor = new SimpleMDE({
-            element: document.getElementById("page-content"),
-            renderingConfig: {
-                singleLineBreaks: false
-            }
-        });
         let _self = this;
         $('.ui.calendar').calendar({
             type: 'date',
@@ -78,7 +74,7 @@ var pageAddVm = new Vue({
         },
         postCustomPage: function (publishState) {
             let data = $.extend({}, this.customPage, {
-                customPageContent: this.markdownEditor.markdown(this.markdownEditor.value()),
+                customPageContent: this.$refs.pageEditor.getRenderResult(),
                 publish: publishState
             });
 
@@ -101,7 +97,7 @@ var pageAddVm = new Vue({
             }
 
             $.post("/admin/page/review", {pageName: pageName,
-                customPageContent: this.markdownEditor.markdown(this.markdownEditor.value())
+                customPageContent: this.$refs.pageEditor.getRenderResult()
             }).then((responseData) => {
                 const review = window.open("/admin/page/review");
                 window.addEventListener('message', function (e){
@@ -110,6 +106,6 @@ var pageAddVm = new Vue({
                     }
                 });
             });
-        }
+        },
     },
 });

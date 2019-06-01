@@ -40,14 +40,14 @@ window.hydro = (function () {
         {
             pathRegex: /admin\/article\/add$/,
             scripts:[
-                'https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js',
+                '/js/editor.js',
                 '/js/article/articleAdd.js'
             ]
         },
         {
             pathRegex:/admin\/article\/edit\/\d+$/,
             scripts:[
-                'https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js',
+                '/js/editor.js',
                 '/js/article/articleAdd.js'
             ]
         },
@@ -85,6 +85,12 @@ window.hydro = (function () {
             ]
         },
         {
+            pathRegex: /admin\/setting\/about$/,
+            scripts: [
+                '/js/setting/systemInfo.js'
+            ]
+        },
+        {
             pathRegex: /admin\/page$/,
             scripts: [
                 '/js/page/pageMain.js'
@@ -94,7 +100,7 @@ window.hydro = (function () {
             pathRegex: /admin\/page\/add$/,
             scripts: [
                 'https://cdn.bootcss.com/semantic-ui-calendar/0.0.8/calendar.min.js',
-                'https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js',
+                '/js/editor.js',
                 '/js/page/pageAdd.js'
             ]
         }

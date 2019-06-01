@@ -28,7 +28,7 @@ import java.util.Properties;
 @Configuration
 public class DataSourceConfig {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
 
     private final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     private final String CONNECTION_STR_TEMPLATE = "jdbc:mysql://%s:%s/%s?characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true";
@@ -62,13 +62,15 @@ public class DataSourceConfig {
         Yaml yaml = new Yaml();
         Resource resource = new ClassPathResource("hydro-config.yaml");
         if(!resource.exists()){
-            throw new RuntimeException("Hydro-config.yaml Not found");
+            logger.error("Hydro-config.yaml Not found");
+            throw new RuntimeException();
         }
         Map<String, Map<String, String>> config = null;
         try(InputStream inputStream = resource.getInputStream()) {
             config = yaml.loadAs(inputStream, HashMap.class);
         }catch (IOException e){
-            throw new RuntimeException("can't load hydro-config.yaml");
+            logger.error("can't load hydro-config.yaml");
+            throw new RuntimeException();
         }
         Optional.ofNullable(config.get("database")).ifPresent(m -> {
             setHost(m.get("host"));
@@ -98,7 +100,8 @@ public class DataSourceConfig {
         try (InputStream inputStream = resource.getInputStream()){
             properties.load(inputStream);
         }catch (IOException e){
-            throw new RuntimeException("can't load webSiteConfig.properties");
+            logger.error("can't load webSiteConfig.properties");
+            throw new RuntimeException();
         }
 
         Connection conn = null;

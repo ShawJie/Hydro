@@ -140,7 +140,7 @@ public class ArticleController {
     @ResponseBody
     public ResponseModel saveCategory(Category category){
         if(categoryService.countCategoryName(category) > 0){
-            return new ResponseModel(false, messagesResource.getMessage("Article.categories.exists"), null);
+            return new ResponseModel(false, messagesResource.getMessage("Article.categories.exists", category.getCategoryName()), null);
         }
 
         boolean newItem = (category.getId() == null);
@@ -197,7 +197,7 @@ public class ArticleController {
     @ResponseBody
     public ResponseModel saveTag(Tag tag){
         if(tagService.countTagName(tag) > 0){
-            return new ResponseModel(false, messagesResource.getMessage("Article.tag.exists"), null);
+            return new ResponseModel(false, messagesResource.getMessage("Article.tag.exists", tag.getTagName()), null);
         }
 
         boolean newItem = (tag.getId() == null);

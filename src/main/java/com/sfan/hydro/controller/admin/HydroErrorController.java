@@ -4,6 +4,7 @@ import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class HydroErrorController implements ErrorController {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(HydroErrorController.class);
 
     private final String ERROR_PAGE = "error/info";
 
@@ -22,7 +23,7 @@ public class HydroErrorController implements ErrorController {
     public String errorPage(Model model, HttpServletRequest request, HttpServletResponse response){
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 
-        model.addAttribute("exceptionType", statusCode);
+        model.addAttribute("exceptionType", HttpStatus.valueOf(statusCode));
         return getErrorPath();
     }
 

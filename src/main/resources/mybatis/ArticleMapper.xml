@@ -4,7 +4,7 @@
     <resultMap id="ArticleMapper" type="com.sfan.hydro.domain.model.Article">
         <id column="id" property="id" jdbcType="INTEGER" />
 		<result column="uid" property="authorId" jdbcType="INTEGER"/>
-		<result column="create_date" property="createDate" jdbcType="DATE" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="markdown_path" property="markdownPath" jdbcType="VARCHAR" />

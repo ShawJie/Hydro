@@ -4,10 +4,14 @@ import com.sfan.hydro.domain.enumerate.MessageLocale;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +24,7 @@ import java.util.Properties;
 @Component
 public class CustomLocaleResolver implements LocaleResolver {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(CustomLocaleResolver.class);
 
     private Locale locale;
     private Properties prop;
@@ -51,7 +55,7 @@ public class CustomLocaleResolver implements LocaleResolver {
                     this.locale = Locale.US;
                     break;
                 default:
-                    this.locale = Locale.getDefault();
+                    this.locale = null;
             }
         }
         prop.setProperty(SystemConst.Language.getVal(), locale == null ? "" : locale.getVal());
@@ -65,13 +69,12 @@ public class CustomLocaleResolver implements LocaleResolver {
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
         if (locale == null){
-            locale = Locale.getDefault();
+            return new AcceptHeaderLocaleResolver().resolveLocale(request);
         }
         return locale;
     }
 
     @Override
     public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-
     }
 }

@@ -29,12 +29,12 @@ public class ThemeServiceImpl implements ThemeService {
     private final String ROUTE_PREFIX = "Route.";
     private final String OPTION_PREFIX = "Option.";
     private final String THEME_FILE_NAME = "theme.properties";
-    private final String[] THEME_FILE_REQUIRE_FIELD = {"Name", "Creator", "Description", "Rendering", "Route.Index", "Route.post.detail"};
+    private final String[] THEME_FILE_REQUIRE_FIELD = {"Name", "Creator", "Description", "Rendering", "Route.Index", "Route.post.detail", "wrapper"};
 
     private Properties config = new Properties();
     private Resource configResource = new ClassPathResource("configuration/webSiteConfig.properties");
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(ThemeService.class);
 
     @Autowired
     private ThymeleafViewResolver viewResolver;
@@ -66,7 +66,7 @@ public class ThemeServiceImpl implements ThemeService {
             updatePropertiesVal(theme);
         }catch (IOException e){
             logger.error("change theme failed", e);
-            throw new RuntimeException("change theme failed");
+            throw new RuntimeException();
         }
         currentTheme = theme;
     }
@@ -96,6 +96,7 @@ public class ThemeServiceImpl implements ThemeService {
             theme.setDescription(themeProperties.get("Description"));
             theme.setThemeName(themeProperties.get("Name"));
             theme.setRendering(themeProperties.get("Rendering"));
+            theme.setCustomWrapper(themeProperties.get("wrapper"));
 
             Map<String, String> routeMap = new HashMap();
             Map<String, String> optionMap = new HashMap<>();
@@ -190,7 +191,8 @@ public class ThemeServiceImpl implements ThemeService {
             currentTheme = theme;
             changeTheme(theme);
         }catch (IOException e){
-            throw new RuntimeException("Theme initial failed", e);
+            logger.error("Theme initial failed", e);
+            throw new RuntimeException();
         }
     }
 

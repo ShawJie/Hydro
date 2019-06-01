@@ -39,9 +39,8 @@ section{
 }
 
 .dimmer > div.loader{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
 .pagination{
@@ -51,4 +50,8 @@ section{
 
 .pagination a{
     outline: none;
+}
+
+.hide{
+    display: none;
 }

@@ -16,9 +16,51 @@
 
     <properties>
         <java.version>11</java.version>
-        <outputDirectory>${project.build.directory}/build</outputDirectory>
+        <outputDirectory>${project.build.directory}/hydro</outputDirectory>
         <hydro-version>0.0.1</hydro-version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <database.host>127.0.0.1</database.host>
+                <database.port>3306</database.port>
+                <database.name>hydrogen</database.name>
+                <database.user>root</database.user>
+                <database.pwd>"0621"</database.pwd>
+                <first.database>false</first.database>
+                <first.account>false</first.account>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <database.host>127.0.0.1</database.host>
+                <database.port>3306</database.port>
+                <database.name>hydro_test</database.name>
+                <database.user>root</database.user>
+                <database.pwd>"0621"</database.pwd>
+                <first.database>false</first.database>
+                <first.account>false</first.account>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <database.host></database.host>
+                <database.port></database.port>
+                <database.name></database.name>
+                <database.user></database.user>
+                <database.pwd></database.pwd>
+                <first.database>true</first.database>
+                <first.account>true</first.account>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -43,9 +85,20 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>2.1.5.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -85,10 +138,16 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>hydro-${hydro-version}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -156,6 +215,7 @@
                         <configuration>
                             <resources>
                                 <resource>
+                                    <filtering>true</filtering>
                                     <directory>src/main/resources</directory>
                                     <excludes>
                                         <exclude>/configuration/custom/</exclude>
@@ -182,31 +242,12 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>src/main/resources</directory>
                                     <filtering>true</filtering>
+                                    <directory>src/main/resources</directory>
                                     <includes>
                                         <include>hydro-config.yaml</include>
-                                        <include>setup.bat</include>
                                     </includes>
                                 </resource>
-                            </resources>
-                            <outputDirectory>${outputDirectory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>initialData</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>resources</goal>
-                        </goals>
-                        <configuration>
-                            <resources>
                                 <resource>
                                     <directory>src/main/resources/configuration</directory>
                                     <filtering>true</filtering>

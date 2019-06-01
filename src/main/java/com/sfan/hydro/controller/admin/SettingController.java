@@ -2,6 +2,7 @@ package com.sfan.hydro.controller.admin;
 
 import com.sfan.hydro.attach.MessagesResource;
 import com.sfan.hydro.domain.DTO.UserDTO;
+import com.sfan.hydro.domain.enumerate.FileType;
 import com.sfan.hydro.domain.enumerate.MessageLocale;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import com.sfan.hydro.domain.expand.ResponseModel;
@@ -11,13 +12,17 @@ import com.sfan.hydro.domain.model.User;
 import com.sfan.hydro.service.SettingService;
 import com.sfan.hydro.service.UserService;
 import com.sfan.hydro.support.CustomLocaleResolver;
+import com.sfan.hydro.util.FileUtil;
 import com.sfan.hydro.util.MessageDigestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.*;
 
 @Controller
@@ -27,18 +32,32 @@ public class SettingController {
     private final String PREFIX_PATH = "/admin/setting/";
 
     @Autowired
-    SettingService settingService;
+    private SettingService settingService;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    MessagesResource messagesResource;
+    private MessagesResource messagesResource;
     @Autowired
-    CustomLocaleResolver localeResolver;
+    private CustomLocaleResolver localeResolver;
+
+    @Value("${hydro.version}")
+    private String currentVersion;
 
     @RequestMapping
-    public String settingMain(){
+    public String settingMainView(){
         return PREFIX_PATH + "settingMain";
+    }
+
+    @RequestMapping("/about")
+    public String systemAboutView(Model model) {
+        model.addAttribute("currentVersion", currentVersion);
+
+        File file = FileUtil.filepathResolver(FileType.Update.getPath() + "hydro");
+        if(file.exists() && file.isDirectory() && file.list().length > 0){
+            model.addAttribute("hasDecompressed", true);
+        }
+        return PREFIX_PATH + "systemInfo";
     }
 
     @RequestMapping("/defaultSetting")

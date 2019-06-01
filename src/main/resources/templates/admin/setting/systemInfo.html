@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="@{admin/common/on-load-file} :: commonOnLoadfile(#{Setting} + ' ﹤ Hydro')">
+</head>
+<body>
+<th:block th:if="${pjaxLoad == null}">
+    <header th:replace="@{admin/common/main} :: adminHeader"></header>
+    <aside th:replace="@{admin/common/main} :: adminSide(#{Setting})"></aside>
+</th:block>
+    <section>
+        <link th:href="@{/css/setting/systemInfo.css}" rel="stylesheet"/>
+        <div class="main-layout">
+            <div class="ui segment basic center aligned">
+                <div class="ui header large">
+                    <span class="content">About Hydro</span>
+                    <div class="sub header">
+                        A dynamic blob build by Java
+                    </div>
+                </div>
+                <div class="ui horizontal list link">
+                    <a class="item" href="https://www.github.com/ShawJie/Hydro">
+                        <i class="github large middle aligned icon"></i>
+                        <div class="content">
+                            ShawJie/Hydro
+                        </div>
+                    </a>
+                </div>
+                <div class="ui segment basic center aligned">
+                    <div class="ui small icon header">
+                        <i class="notched circle loading icon" v-if="inProcess"></i>
+                        <i class="check circle icon blue" v-else></i>
+                        <div class="content">
+                            {{updateInfo}}
+                            <div class="sub header action">
+                                <div v-if="step == 'check' || step == 'upToDate'"><th:block th:text="#{Setting.update.current_version}"></th:block>{{version}}</div>
+                                <button class="ui button tiny orange basic" v-if="step == 'hasUpdate'" @click="downloadUpdate"><th:block th:text="#{Setting.update.down_btn}"></th:block>{{remoteVersion}}</button>
+                                <div class="ui indicating tiny progress download" v-if="step == 'downloading' || step == 'decompressing'">
+                                    <div class="bar"></div>
+                                    <label></label>
+                                </div>
+                                <button class="ui button tiny orange basic" v-if="step == 'readyInstall'" @click="installUpdate" th:text="#{Setting.update.install_btn}"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            window._message = {
+                check: "[[#{Setting.update.check}]]",
+                upToDate: "[[#{Setting.update.up_to_date}]]",
+                hasUpdate: "[[#{Setting.update.has_update}]]",
+                downloading: "[[#{Setting.update.downloading}]]",
+                decompress: "[[#{Setting.update.decompress}]]",
+                installReady: "[[#{Setting.update.install_ready}]]",
+            }
+        </script>
+        <script th:inline="javascript">
+            var version = /*[[${currentVersion}]]*/ "";
+            var hasDecompressed = /*[[${hasDecompressed}]]*/ false;
+        </script>
+    </section>
+<th:block th:if="${pjaxLoad == null}">
+    <script th:src="@{/js/setting/systemInfo.js}"></script>
+</th:block>
+</body>
+</html>

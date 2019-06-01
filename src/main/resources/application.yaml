@@ -1,9 +1,4 @@
 spring:
-##   datasource:
-##    url: jdbc:mysql://127.0.0.1:3306/hydrogen?characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
-##    username: root
-##    password: "0621"
-##    driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
@@ -24,3 +19,18 @@ mybatis:
   mapper-locations: classpath:mybatis/*.xml
 logging:
   config: classpath:log4j2.yaml
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /HydroSys
+  server:
+    port: 12138
+    address: 127.0.0.1
+
+hydro:
+  version: 0.0.1

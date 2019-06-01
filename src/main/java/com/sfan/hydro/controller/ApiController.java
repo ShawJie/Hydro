@@ -43,7 +43,7 @@ public class ApiController {
     }
 
     private final String OK_MSG = "OK";
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private Map<Integer, Set<String>> articleViewRecorder;
 

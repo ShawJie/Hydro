@@ -5,7 +5,8 @@ public enum FileType {
 	Article (1, "custom/article/"),
 	Image(2, "custom/image/"),
 	Theme(3, "classpath:templates/themes/"),
-	CustomPage(4, "classpath:templates/customPage/");
+	CustomPage(4, "custom/customPage/"),
+	Update(5, "update/");
 
 	private int value;
 	private String path;

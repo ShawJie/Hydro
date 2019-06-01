@@ -12,7 +12,7 @@
         <link th:href="@{/css/article/articleAdd.css}" rel="stylesheet">
 		<div class="main-layout">
 			<div class="ui large header">
-				<span v-if="article.id == 0" th:text="#{Article.add}"></span>
+				<span v-if="!article.id" th:text="#{Article.add}"></span>
 				<span v-else th:text="#{Article.edit}"></span>
 			</div>
 			<div class="ui grid">
@@ -25,7 +25,15 @@
 				</div>
 				<div class="one column row">
 					<div class="column">
-						<textarea id="markdown-editor" th:text="${articleContext}"></textarea>
+						<markdown-editor
+								th:content="${articleContext}"
+								:need-wrap="true"
+								th:message-insert="#{Markdown.image.insert}"
+								th:message-insert-link="#{Markdown.image.insert.link}"
+								th:message-insert-upload="#{Markdown.image.insert.upload}"
+								th:message-insert-button="#{Markdown.image.insert.yes}"
+								ref="pageEditor">
+						</markdown-editor>
 					</div>
 				</div>
 				<div class="three column row">
@@ -50,7 +58,7 @@
 							<div class="active content">
 								<div class="ui right fluid labeled left icon input">
 									<i class="tags icon"></i>
-									<input type="text" name="categoryName" th:placeholder="#{Article.add.enter_categorys}" v-model="newCategory">
+									<input type="text" name="categoryName" th:placeholder="#{Article.add.enter_category}" v-model="newCategory">
 									<a class="ui tag label add-category" th:text="#{Article.add.add_category}" @click="addCategory"></a>
 								</div>
 								<select id="category" class="ui fluid search dropdown tag-container" v-model="article.categoryId">
@@ -92,7 +100,7 @@
 		</script>
 	</section>
 <th:block th:if="${pjaxLoad == null}">
-	<script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
+	<script th:src="@{/js/editor.js}"></script>
 	<script th:src="@{/js/article/articleAdd.js}"></script>
 </th:block>
 </body>

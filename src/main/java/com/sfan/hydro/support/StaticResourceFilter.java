@@ -2,6 +2,8 @@ package com.sfan.hydro.support;
 
 import com.sfan.hydro.domain.expand.Theme;
 import com.sfan.hydro.service.ThemeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -27,8 +29,10 @@ public class StaticResourceFilter implements Filter {
 
     private Properties properties;
 
+    private Logger logger = LoggerFactory.getLogger(StaticResourceFilter.class);
+
     @Autowired
-    ThemeService themeService;
+    private ThemeService themeService;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -69,7 +73,7 @@ public class StaticResourceFilter implements Filter {
         try {
             properties.load(new ClassPathResource("configuration/webSiteConfig.properties").getInputStream());
         }catch (IOException e){
-            e.printStackTrace();
+            logger.error("cannot load the config in webSiteConfig.properties");
             throw new RuntimeException("initial StaticResourceFilter failed");
         }
 

@@ -17,7 +17,7 @@ Configutation:
     RollingFile:
       name: File_Appender
       ignoreExceptions: false
-      fileName: ${log-path}/hydro-trace.log
+      fileName: ${log-path}/hydro-error.log
       filePattern: ${log-path}/%d{yyyy-MM-dd}/info_%i.log
       Policies:
         TimeBasedTriggeringPolicy:
@@ -35,12 +35,8 @@ Configutation:
       AppenderRef:
         - ref: Console_Appender
         - ref: File_Appender
+          level: error
 
     Logger:
-##      - name: com.sfan.hydro.logger
-##        additivity: true
-##        level: trace
-##        AppenderRef:
-##          - ref: File_Appender
       - name: org.springframework
         level: info

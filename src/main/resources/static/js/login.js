@@ -3,22 +3,42 @@ var loginVm = new Vue({
     data: {
         account: '',
         password: '',
-        isDone: true
+        isDone: true,
+        form: undefined,
     },
     mounted: function () {
-        $(".fields").form({
+        this.form = document.getElementsByClassName('fields')[0];
+
+        let _self = this;
+        $(this.form).form({
             on: 'blur',
             fields:{
-                account: 'empty',
-                password: ['empty', 'minLength[6]']
-            }
+                account: {
+                    identifier: 'account',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'account_empty'
+                    }]
+                },
+                password: {
+                    identifier: 'password',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'password_empty'
+                    }, {
+                        type: 'minLength[6]',
+                        prompt: 'password_less_charset'
+                    }]
+                }
+            },
+            onFailure: _self.check
         });
     },
     methods: {
         doLogin: function () {
-            if(this.isDone && this.check()){
+            if(this.isDone && $(this.form).form('validate form')[0] == undefined){
                 this.isDone = false;
-                var _self = this;
+                let _self = this;
                 $.ajax('/admin/login', {
                     type: 'post',
                     data: {
@@ -41,15 +61,10 @@ var loginVm = new Vue({
                 });
             }
         },
-        check: function () {
-            if(!$(".fields").form('validate field','account')){
-                window.noty('warning', window._message.account_empty, {timeout: 3000});
-                return false;
-            }else if(!$(".fields").form('validate field','password')){
-                window.noty('warning', window._message.password_wrong, {timeout: 3000});
-                return false;
-            }
-            return true;
+        check: function (formErrors, fields) {
+            formErrors.forEach(e => {
+                window.noty('warning', window._message[e], {timeout: 3000});
+            });
         }
     }
 });

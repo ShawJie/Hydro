@@ -1,0 +1,7 @@
+.action > button {
+    margin-top: 5px !important;
+}
+
+.action > .progress{
+    width: 15rem !important;
+}

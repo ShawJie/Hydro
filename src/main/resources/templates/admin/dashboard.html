@@ -12,84 +12,101 @@
             <div class="ui large inline header" th:text="#{Dashboard}"></div>
             <div class="ui segment">
                 <div class="ui big header">
-                    Welcome to Hydro!
-                    <div class="sub header">
-                        We’ve assembled some quick links:
-                    </div>
+                    <th:block th:text="#{Dashboard.welcome}"></th:block>
+                    <div class="sub header" th:text="#{Dashboard.welcome_sub}"></div>
                 </div>
                 <div class="ui three column grid">
                     <div class="column">
-                        <div class="ui small header">Article Part</div>
-                        <a class="ui button green basic" href="/admin/article/add">
-                            Write a New Post
-                        </a>
+                        <div class="ui small header" th:text="#{Dashboard.article_part}"></div>
+                        <a class="ui button green basic" href="/admin/article/add" th:text="#{Dashboard.article_new}"></a>
                         <div class="ui list">
                             <a class="item" href="/admin/article">
                                 <i class="icon file alternate"></i>
-                                Article list
+                                <th:block th:text="#{Dashboard.article_list}"></th:block>
                             </a>
                         </div>
                     </div>
                     <div class="column">
-                        <div class="ui small header">More actions</div>
+                        <div class="ui small header" th:text="#{Dashboard.more_action}"></div>
                         <div class="ui list">
                             <a class="item" href="/admin/media">
                                 <i class="icon images outline"></i>
-                                Media Content
+                                <th:block th:text="#{Dashboard.media}"></th:block>
                             </a>
                             <a class="item" href="/admin/theme">
                                 <i class="icon anchor"></i>
-                                Theme List
+                                <th:block th:text="#{Dashboard.theme}"></th:block>
                             </a>
                             <a class="item" href="/admin/setting">
                                 <i class="icon cogs"></i>
-                                WebSite Setting
+                                <th:block th:text="#{Dashboard.website_config}"></th:block>
                             </a>
                         </div>
                     </div>
                     <div class="column">
-                        <div class="ui small header">At a Glance</div>
+                        <div class="ui small header" th:text="#{Dashboard.glance}"></div>
                         <div class="ui list">
                             <div class="item">
                                 <i class="icon file alternate"></i>
                                 <div class="content">
-                                    <a href="/admin/article" th:text=" ${articleAmount} + ' Post'"></a>
+                                    <a href="/admin/article" th:text=" #{Dashboard.glance.post(${articleAmount})}"></a>
                                 </div>
                             </div>
                             <div class="item">
                                 <i class="icon images outline"></i>
                                 <div class="content">
-                                    <a href="/admin/media" th:text="${mediaAmount} + ' Media'"></a>
+                                    <a href="/admin/media" th:text="#{Dashboard.glance.media(${mediaAmount})}"></a>
                                 </div>
                             </div>
                             <div class="item">
                                 <i class="icon anchor"></i>
                                 <div class="content">
-                                    <a href="/admin/theme" th:text="${themeAmount} + ' Theme'"></a>
+                                    <a href="/admin/theme" th:text="#{Dashboard.glance.theme(${themeAmount})}"></a>
                                 </div>
                             </div>
                         </div>
-                        <a class="ui green basic label" href="/admin/theme">
-                            Hydro running <i th:text="${themeName}"></i> theme
-                        </a>
+                        <a class="ui green basic label" href="/admin/theme" th:text="#{Dashboard.run_theme(' '+ ${themeName} +' ')}"></a>
                     </div>
                 </div>
             </div>
-            <div class="ui grid three column">
+            <div class="ui grid four column">
                 <div class="column">
-                    <div class="ui center aligned segment">
-                        <div class="ui header">Site Data View</div>
+                    <div class="ui segment">
+                        <div class="ui header" th:text="#{Dashboard.visit_info}"></div>
+                        <div class="visit-data-wrapper" style="max-height: 25vh; overflow-y: auto;">
+                            <table class="ui very basic table">
+                                <thead>
+                                <tr>
+                                    <th>IP</th>
+                                    <th th:text="#{Dashboard.visit_info.request_path}"></th>
+                                    <th th:text="#{Dashboard.visit_info.datetime}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="visitInfo : ${todayVisitList}">
+                                    <td th:text="${visitInfo.ip}"></td>
+                                    <td th:text="${visitInfo.requestPath}"></td>
+                                    <td th:text="${#dates.format(visitInfo.datetime, 'HH:mm:ss')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">
+                        <div class="ui header" th:text="#{Dashboard.visit_view}"></div>
                         <div class="ui statistics">
                             <div class="statistic">
                                 <div class="value" th:text="'+' + ${todayVisitCount}"></div>
-                                <div class="label">Today's visits</div>
+                                <div class="label" th:text="#{Dashboard.visit_view.today}"></div>
                             </div>
                             <div class="statistic">
                                 <div class="value">
                                     <i class="icon chart bar outline"></i>
                                     <th:block th:text="${totalVisitCount}"></th:block>
                                 </div>
-                                <div class="label">Total traffic</div>
+                                <div class="label" th:text="#{Dashboard.visit_view.total}"></div>
                             </div>
                         </div>
                     </div>

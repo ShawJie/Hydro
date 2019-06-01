@@ -13,12 +13,12 @@
 </head>
 <body>
 	<aside>
-		<top-menu th:about-path="${About_Link}"></top-menu>
+		<top-menu th:about-path="${option.About_Link}"></top-menu>
 	</aside>
 	<header>
-		<div class="banner" th:style="'background-image: url(' + ${Index_Background} + ')'">
+		<div class="banner" th:style="'background-image: url(' + ${option.Index_Background} + ')'">
 			<div class="banner-blurry">
-				<div class="rotate-img" th:style="'background-image: url(' + ${Index_Background} + ')'"></div>
+				<div class="rotate-img" th:style="'background-image: url(' + ${option.Index_Background} + ')'"></div>
 			</div>
 			<div class="content">
 				<div class="owner-info ui center aligned basic segment">
@@ -45,7 +45,7 @@
 		<div class="post container ui grid">
 			<div :class="[index % 2 ? 'right' : 'left','floated ten wide column']" v-for="(post, index) in postList">
 				<div :class="[index % 2 ? 'right' : 'left', 'post-item ui segment aligned']">
-					<a :class="['ui orange', index % 2 ? '' : 'right', 'ribbon label']" v-if="post.category">
+					<a :class="['ui orange', index % 2 ? '' : 'right', 'ribbon label']">
 						{{post.category.categoryName}}
 					</a>
 					<div :class="['ui', index % 2 ? 'left' : 'right', 'aligned header']">
@@ -62,9 +62,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="ui segment center aligned basic see-more-button" v-show="postList.length < postAmount">
-			<button class="ui button basic" @click="nextPage">查看更多</button>
-		</div>
+		<div class="ui segment center aligned basic see-more-button">
+			<button class="ui button basic" @click="nextPage" v-if="postList.length < postAmount">查看更多</button>
+            <div class="end point" v-else></div>
+        </div>
 	</main>
 	<footer>
 		<div class="ui segment basic center aligned footer">

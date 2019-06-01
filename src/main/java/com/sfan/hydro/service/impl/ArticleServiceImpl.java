@@ -15,6 +15,8 @@ import com.sfan.hydro.util.FileUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	ArticleDao articleDao;
 
+	Logger logger = LoggerFactory.getLogger(ArticleService.class);
+
 	void CreateArticleFile(Article article,String markdownContent, String htmlContent) {
 		try {
 			FileUtil.writeInFile(markdownContent.getBytes(StandardCharsets.UTF_8), FileType.Article.getPath() + article.getTitle(), article.getTitle() + ".md");
@@ -31,6 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
 			article.setMarkdownPath(String.format("%s/%s",article.getTitle(), article.getTitle()+".md"));
 			article.setHtmlPath(String.format("%s/%s",article.getTitle(), article.getTitle()+".html"));
 		} catch (IOException e) {
+			logger.error("Create article file failed", e);
 			e.printStackTrace();
 		}
 	}

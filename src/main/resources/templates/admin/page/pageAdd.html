@@ -28,7 +28,15 @@
                         <div class="ui pointing basic red label route_tip" v-show="routePathExists" th:text="#{Pages.route_path_exists}"></div>
                     </div>
                     <div class="field">
-                        <textarea id="page-content" th:text="${pageContent}"></textarea>
+                        <markdown-editor
+                                th:content="${pageContent}"
+                                :need-wrap="false"
+                                th:message-insert="#{Markdown.image.insert}"
+                                th:message-insert-link="#{Markdown.image.insert.link}"
+                                th:message-insert-upload="#{Markdown.image.insert.upload}"
+                                th:message-insert-button="#{Markdown.image.insert.yes}"
+                                ref="pageEditor">
+                        </markdown-editor>
                     </div>
                 </div>
                 <div class="four wide column">
@@ -66,7 +74,7 @@
     </section>
 <th:block th:if="${pjaxLoad == null}">
     <script src="https://cdn.bootcss.com/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
-    <script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
+    <script th:src="@{/js/editor.js}"></script>
     <script th:src="@{/js/page/pageAdd.js}" ></script>
 </th:block>
 </body>

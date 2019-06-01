@@ -103,6 +103,15 @@
 	padding-top: 0 !important;
 }
 
+.end.point{
+	width: 15px;
+	height: 15px;
+	border-radius: 50px;
+	border: 1px solid #ccc;
+	margin: 0 auto;
+	transform: translateX(-1px);
+}
+
 .footer{
 	padding-top: 4rem !important;
 	padding-bottom: 8rem !important;

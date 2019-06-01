@@ -20,7 +20,7 @@ public class InterviewInterceptor implements HandlerInterceptor {
     private static Set<String> ipSet = new HashSet<>();
     private static Timer timer = new Timer();
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(InterviewInterceptor.class);
 
     @Lazy
     @Autowired

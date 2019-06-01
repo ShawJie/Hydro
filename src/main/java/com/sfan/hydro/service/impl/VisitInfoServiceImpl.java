@@ -21,26 +21,29 @@ public class VisitInfoServiceImpl implements VisitInfoService {
 
     @Override
     public List<VisitInfo> listVisitInfo(Date startTime, Date endTime) {
-        Map<String, Date> timeInterval = new HashMap<>();
-        timeInterval.put("startTime", startTime);
-        timeInterval.put("endTime", endTime);
+        Map<String, Date> timeInterval = timeSpace(startTime, endTime);
         return visitInfoDao.listVisitInfo(timeInterval);
     }
 
     @Override
     public int countVisit(Date startTime, Date endTime) {
-        Map<String, Date> timeInterval;
-        if (startTime == null){
-            timeInterval = null;
-        }else if(startTime != null && endTime != null){
-            timeInterval = new HashMap<>();
-            timeInterval.put("startTime", startTime);
-            timeInterval.put("endTime", endTime);
-        }else {
-            timeInterval = new HashMap<>();
-            timeInterval.put("startTime", startTime);
-            timeInterval.put("endTime", Calendar.getInstance().getTime());
-        }
+        Map<String, Date> timeInterval = timeSpace(startTime, endTime);
         return visitInfoDao.countVisit(timeInterval);
+    }
+
+    private HashMap<String, Date> timeSpace(Date startTime, Date endTime){
+        HashMap<String, Date> wrapper;
+        if (startTime == null){
+            wrapper = null;
+        }else if(startTime != null && endTime != null){
+            wrapper = new HashMap<>();
+            wrapper.put("startTime", startTime);
+            wrapper.put("endTime", endTime);
+        }else {
+            wrapper = new HashMap<>();
+            wrapper.put("startTime", startTime);
+            wrapper.put("endTime", Calendar.getInstance().getTime());
+        }
+        return wrapper;
     }
 }

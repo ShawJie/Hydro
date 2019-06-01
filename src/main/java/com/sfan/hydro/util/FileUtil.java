@@ -1,10 +1,16 @@
 package com.sfan.hydro.util;
 
 import com.sfan.hydro.domain.enumerate.FileType;
+import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.ByteChannel;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -18,6 +24,25 @@ public class FileUtil {
 		}
 		Path path = rootLocation.resolve(fileName);
 		Files.write(path, fileBytes);
+		return true;
+	}
+
+	public static boolean writeInFile(InputStream inputStream, String filePath, String fileName) throws IOException{
+		Assert.notNull(inputStream, "input Stream cannot be empty");
+		File rootLocation = filepathResolver(filePath);
+		if(!rootLocation.exists()){
+			rootLocation.mkdirs();
+		}
+
+		try (ReadableByteChannel in = Channels.newChannel(inputStream);
+			 FileChannel out = new FileOutputStream(new File(rootLocation, fileName)).getChannel()){
+			ByteBuffer buffer = ByteBuffer.allocate(1024 * 10);
+			while (in.read(buffer) != -1){
+				buffer.flip();
+				out.write(buffer);
+				buffer.clear();
+			}
+		}
 		return true;
 	}
 
@@ -65,14 +90,7 @@ public class FileUtil {
 	}
 
 	public static File deCompressRecursion(InputStream archiveFile, FileType fileType, String deCompressLocation) throws IOException{
-		File rootPath;
-		if(fileType == null){
-			rootPath = new File(deCompressLocation);
-		}else{
-			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-			URL url = classLoader.getResource(fileType.getPath().replaceFirst(ResourceUtils.CLASSPATH_URL_PREFIX + "/", ""));
-			rootPath = new File(url.getFile() + deCompressLocation);
-		}
+		File rootPath = filepathResolver((fileType != null ? fileType.getPath() : "") + deCompressLocation);
 
 		if(!rootPath.exists()){
 			rootPath.mkdir();

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class CustomPageController {
     private final String PREFIX_PATH = "/admin/page/";
     private final String PAGE_FILE_SUFFIX = ".html";
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(CustomPageController.class);
 
     @Autowired
     private CustomPageService customPageService;

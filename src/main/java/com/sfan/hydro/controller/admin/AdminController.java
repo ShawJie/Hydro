@@ -3,6 +3,7 @@ package com.sfan.hydro.controller.admin;
 import com.sfan.hydro.domain.enumerate.SystemConst;
 import com.sfan.hydro.domain.expand.ResponseModel;
 import com.sfan.hydro.domain.model.User;
+import com.sfan.hydro.domain.model.VisitInfo;
 import com.sfan.hydro.service.*;
 import com.sfan.hydro.attach.MessagesResource;
 import com.sfan.hydro.util.MessageDigestUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.JDBCType;
 import java.util.*;
 
 @Controller
@@ -77,7 +79,11 @@ public class AdminController {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        modelData.put("todayVisitCount", visitInfoService.countVisit(calendar.getTime(), null));
+
+        List<VisitInfo> visitInfos = visitInfoService.listVisitInfo(calendar.getTime(), null);
+
+        modelData.put("todayVisitList", visitInfos);
+        modelData.put("todayVisitCount", visitInfos.size());
 
         model.addAllAttributes(modelData);
         return "admin/dashboard";
