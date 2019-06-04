@@ -27,6 +27,7 @@
   - 在Mysql下创建一个数据库
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
   - 在项目根目录执行执行 `hydro-cli -i` 命令以运行系统
+  - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
   - 若要关闭项目则在项目根目录执行 `hydro-cli -s` 命令
 - Linux：(请勿使用管理员权限进行以下操作，否则可能无法进行更新操作)
   - 下载[Hydro.tar.gz]() 并解压到任意文件夹
@@ -35,6 +36,7 @@
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
   - 在项目根目录执行 `/bin/bash hydro-cli.sh -i` 命令以运行系统
     - 若是通过SSH连接linux的使用者可以参考[Screen](https://www.ibm.com/developerworks/cn/linux/l-cn-screen/index.html)命令以保持在SSH关闭连接后项目能持续运行
+  - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
   - 若要关闭项目则在项目根目录执行 `/bin/bash hydro-cli -s` 命令
   
 ## 主题开发
@@ -94,5 +96,26 @@ Option.About_Link = {"textName": "关于我页面链接", "value": "/sample-page
 
 ## 页面预览
 
-登陆界面
-![]()
+![系统主页](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/home.jpg)
+<div align="center">主页</div>
+
+![登陆界面](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_login.png)
+<div align="center">登陆</div>
+
+![仪表盘](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_dashboard.png)
+<div align="center">仪表盘</div>
+
+![文章列表](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_articles.png)
+<div align="center">文章列表</div>
+
+![媒体](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_media.png)
+<div align="center">媒体</div>
+
+![主题](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_theme.png)
+<div align="center">主题列表</div>
+
+![系统设置](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_setting.png)
+<div align="center">系统设置</div>
+
+![系统更新](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_update.png)
+<div align="center">系统更新</div>
