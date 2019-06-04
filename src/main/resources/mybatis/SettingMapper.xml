@@ -9,7 +9,7 @@
     </resultMap>
 
     <sql id="tableName">
-        HY_SETTING
+        hy_setting
     </sql>
 
     <sql id="fieldName">

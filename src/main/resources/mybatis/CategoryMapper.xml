@@ -11,7 +11,7 @@
         id, category_name, description
     </sql>
     
-    <sql id="tableName">HY_CATEGORY</sql>
+    <sql id="tableName">hy_category</sql>
     
     <insert id="saveCategory" parameterType="com.sfan.hydro.domain.model.Category" useGeneratedKeys="true" keyProperty="id">
     	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)

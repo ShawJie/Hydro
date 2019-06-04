@@ -151,8 +151,10 @@ public class SystemUpdateHandler extends TextWebSocketHandler {
             logger.info("execute cmd: {}", String.format("cmd.exe /c %s\\hydro-cli -u", homeDir));
             process = Runtime.getRuntime()
                     .exec(String.format("cmd.exe /c %s\\hydro-cli -u", homeDir));
-        }else{
-
+        }else if(osName.toLowerCase().startsWith("linux")){
+            logger.info("execute shell: {}", String.format("/bin/bash %s/hydro-cli.sh -u", homeDir));
+            process = Runtime.getRuntime()
+                    .exec(String.format("/bin/bash %s/hydro-cli.sh -u", homeDir));
         }
     }
 

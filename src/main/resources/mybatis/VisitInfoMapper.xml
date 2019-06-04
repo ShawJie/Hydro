@@ -9,7 +9,7 @@
     </resultMap>
 
     <sql id="tableName">
-        HY_VISIT_INFO
+        hy_visit_info
     </sql>
 
     <sql id="fields">

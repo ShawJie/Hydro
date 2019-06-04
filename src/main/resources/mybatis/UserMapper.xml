@@ -19,7 +19,7 @@
         github, activated, group_set, last_login_date
     </sql>
     
-    <sql id="tableName">HY_USER</sql>
+    <sql id="tableName">hy_user</sql>
     
     <insert id="saveUser" parameterType="com.sfan.hydro.domain.model.User">
     	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)

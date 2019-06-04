@@ -131,7 +131,7 @@ INSERT INTO `hy_setting`(`id`, `item_name`, `item_value`, `is_system_variable`) 
 INSERT INTO `hy_setting`(`id`, `item_name`, `item_value`, `is_system_variable`) VALUES (DEFAULT, 'TagLine', 'Here is Hydro', 1);
 INSERT INTO `hy_setting`(`id`, `item_name`, `item_value`, `is_system_variable`) VALUES (DEFAULT, 'Language', '', 1);
 INSERT INTO `hy_media`(`id`, `file_name`, `file_path`, `upload_date`, `file_type`, `description`) VALUES (DEFAULT, 'avator', 'head.jpg', sysdate(), 2, '');
-INSERT INTO `hy_article`(`id`, `uid`, `create_date`, `view_count`, `title`, `markdown_path`, `html_path`, `cid`, `is_publicise`, `excerpt`) VALUES (15, 2, sysdate(), 1, 'Hello World !', 'Hello World !/Hello World !.md', 'Hello World !/Hello World !.html', NULL, 0, '<p>welcome to hydro, here is your first article, edit it, and start now</p>');
+INSERT INTO `hy_article`(`id`, `uid`, `create_date`, `view_count`, `title`, `markdown_path`, `html_path`, `cid`, `is_publicise`, `excerpt`) VALUES (DEFAULT, 1, sysdate(), 1, 'Hello World !', 'Hello World !/Hello World !.md', 'Hello World !/Hello World !.html', NULL, 0, '<p>welcome to hydro, here is your first article, edit it, and start now</p>');
 INSERT INTO  `hy_page`(`id`, `page_name`, `route_path`, `page_path`, `is_publish`, `release_date`) VALUES (DEFAULT, 'Sample page', 'sample-page', 'samplePage.html', 1, NULL);
 
 

@@ -11,7 +11,7 @@
     </resultMap>
 
     <sql id="tableName">
-        HY_PAGE
+        hy_page
     </sql>
 
     <sql id="fields">

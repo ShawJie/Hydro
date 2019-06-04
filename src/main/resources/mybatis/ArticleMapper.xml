@@ -26,7 +26,7 @@
        is_publicise, excerpt
     </sql>
     
-    <sql id="tableName">HY_ARTICLE</sql>
+    <sql id="tableName">hy_article</sql>
     
     <select id="countTitle" parameterType="com.sfan.hydro.domain.model.Article" resultType="Integer">
     	SELECT COUNT(0) from <include refid="tableName"/>

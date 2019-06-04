@@ -11,7 +11,7 @@
         id, tag_name, description
     </sql>
     
-    <sql id="tableName">HY_TAG</sql>
+    <sql id="tableName">hy_tag</sql>
     
     <insert id="saveTag" parameterType="com.sfan.hydro.domain.model.Tag" useGeneratedKeys="true" keyProperty="id">
     	INSERT INTO<include refid="tableName"/>(<include refid="Columns"/>)

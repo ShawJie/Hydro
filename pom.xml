@@ -146,7 +146,7 @@
     </dependencies>
 
     <build>
-        <finalName>hydro-${hydro-version}</finalName>
+        <finalName>hydro</finalName>
 
         <plugins>
             <plugin>
@@ -170,7 +170,6 @@
                         <exclude>/configuration/**</exclude>
                         <exclude>*.properties</exclude>
                         <exclude>*.yaml</exclude>
-                        <exclude>*.bat</exclude>
                     </excludes>
                     <archive>
                         <manifest>
@@ -220,8 +219,15 @@
                                     <excludes>
                                         <exclude>/configuration/custom/</exclude>
                                         <exclude>hydro-config.yaml</exclude>
-                                        <exclude>setup.bat</exclude>
+                                        <exclude>**/*.ico</exclude>
                                     </excludes>
+                                </resource>
+                                <resource>
+                                    <filtering>false</filtering>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
+                                        <include>**/*.ico</include>
+                                    </includes>
                                 </resource>
                             </resources>
                             <outputDirectory>${outputDirectory}/resources/</outputDirectory>
@@ -234,7 +240,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>resource</id>
+                        <id>initial</id>
                         <phase>package</phase>
                         <goals>
                             <goal>resources</goal>

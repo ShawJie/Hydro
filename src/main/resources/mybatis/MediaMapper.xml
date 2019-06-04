@@ -16,7 +16,7 @@
     </sql>
 
     <sql id="tableName">
-        HY_MEDIA
+        hy_media
     </sql>
 
     <insert id="saveMedia" parameterType="com.sfan.hydro.domain.model.Media" keyProperty="id" useGeneratedKeys="true">
