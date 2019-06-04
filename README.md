@@ -1,4 +1,7 @@
-![](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.svg)
+<div align="center">  
+  <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width=""/> 
+<br/>
+
 [English]() <br><br>
 
 [![JDK version](https://img.shields.io/badge/JDK-11-yellow.svg)](https://jdk.java.net/11)&nbsp;&nbsp;
