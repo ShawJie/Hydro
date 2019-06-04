@@ -1,6 +1,6 @@
 <div align="center">  
   <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width=""/> 
-<br/>
+<div>
 
 [English]() <br><br>
 
