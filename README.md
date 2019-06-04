@@ -1,4 +1,4 @@
-# Hydro
+![](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.svg)
 [English]() <br><br>
 
 [![JDK version](https://img.shields.io/badge/JDK-11-yellow.svg)](https://jdk.java.net/11)&nbsp;&nbsp;
