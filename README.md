@@ -1,4 +1,7 @@
-![](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png =200) 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width="200"/> 
+</div>
+
 
 [English]() <br><br>
 
@@ -99,26 +102,26 @@ Option.About_Link = {"textName": "关于我页面链接", "value": "/sample-page
 ## 页面预览
 
 <div align="center">主页</div>
-![系统主页](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/home.jpg)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/home.jpg">
 
 <div align="center">登陆</div>
-![登陆界面](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_login.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_login.png">
 
 <div align="center">仪表盘</div>
-![仪表盘](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_dashboard.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_dashboard.png">
 
 <div align="center">文章列表</div>
-![文章列表](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_articles.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_articles.png">
 
 <div align="center">媒体</div>
-![媒体](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_media.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_media.png">
 
 <div align="center">主题列表</div>
-![主题](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_theme.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_theme.png">
 
 <div align="center">系统设置</div>
-![系统设置](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_setting.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_setting.png">
 
 <div align="center">系统更新</div>
-![系统更新](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_update.png)
+<img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/sys_update.png">
 
