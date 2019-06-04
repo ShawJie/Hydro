@@ -76,15 +76,15 @@ Creator = Irene ## 主题作者 *
 Description = The Hydro blob theme with Semantic UI ## 主题描述 *
 Rendering = SemanticStyle.jpg ## 主题预览图 *
 
-wrapper = pages/wrapper ## 用户自定义页面外部框架
+wrapper = pages/wrapper ## 用户自定义页面外部框架 *
 
 ## 以下为路由配置模块 
 ## Route.为前缀 后跟实际请求地址 例如网站域名为www.hydro.com 那么index页面的访问地址则为 www.hydro.com/hydro
 ## 而属性值为页面在主题内的相对地址
 ## 目前系统只支持单级路由地址
 ## 特殊：Route.post.detail 在用户访问 "域名/post/{文章id}" 会跳转到pages/postDetail页面
-Route.index = index
-Route.post.detail = pages/postDetail
+Route.index = index  ## 主页为必填项 * 
+Route.post.detail = pages/postDetail ## 文章页为必填项 * 
 Route.posts = pages/posts
 Route.archives = pages/archives
 
