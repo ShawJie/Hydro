@@ -1,5 +1,5 @@
 <div align="center">  
-  <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width=""> 
+  <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width="200"> 
 </div>
 
 [English]() <br><br>
