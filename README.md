@@ -1,6 +1,4 @@
-<div align="center">  
-  <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width="200"> 
-</div>
+![](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png =200) 
 
 [English]() <br><br>
 
