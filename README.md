@@ -1,10 +1,16 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width="200"/> 
+  <br>
+  <a href="https://jdk.java.net/11" target="_blank">
+    <img src="https://img.shields.io/badge/JDK-11-yellow.svg">
+  </a>
+  <a href="https://github.com/ShawJie/Hydro/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/licence-GPL-red.svg">
+  </a>
+  <a href="https://github.com/ShawJie" target="_blank">
+    <img src="https://img.shields.io/badge/%3C%2F%3E%20%E2%99%A5-Shaw-blue.svg">
+  </a>
 </div>
-
-[![JDK version](https://img.shields.io/badge/JDK-11-yellow.svg)](https://jdk.java.net/11)&nbsp;&nbsp;
-[![Lince](https://img.shields.io/badge/licence-GPL-red.svg)](https://github.com/ShawJie/Hydro/blob/master/LICENSE)&nbsp;&nbsp;
-[![CodeAuthor](https://img.shields.io/badge/%3C%2F%3E%20%E2%99%A5-Shaw-blue.svg)](https://github.com/ShawJie)&nbsp;&nbsp;
 
 > 一个简单一点的Java动态博客系统
 
