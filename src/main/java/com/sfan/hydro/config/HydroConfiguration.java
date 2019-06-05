@@ -4,8 +4,6 @@ import com.sfan.hydro.support.*;
 import com.sfan.hydro.util.pagination.SqlDialect;
 import com.sfan.hydro.util.pagination.dialects.MysqlDialect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.cglib.core.Block;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +11,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-
-import javax.servlet.ServletContext;
-import javax.servlet.annotation.WebFilter;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
 @Configuration
 public class HydroConfiguration implements WebMvcConfigurer {

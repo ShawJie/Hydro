@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan
 @MapperScan("com.sfan.hydro.dao")
 @SpringBootApplication
-public class HydroApplication {
+public class HydroApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(HydroApplication.class, args);

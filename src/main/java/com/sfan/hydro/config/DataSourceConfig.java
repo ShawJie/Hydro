@@ -4,6 +4,7 @@ import com.sfan.hydro.domain.enumerate.FileType;
 import com.sfan.hydro.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -40,25 +41,10 @@ public class DataSourceConfig {
     private String userName;
     private String password;
     private String databaseName;
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-    public void setPort(String port) {
-        this.port = port;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
+    private int serverPort;
 
     @PostConstruct
-    public void loadJDBCInfo(){
+    public void loadConfigInfo(){
         Yaml yaml = new Yaml();
         Resource resource = new ClassPathResource("hydro-config.yaml");
         if(!resource.exists()){
@@ -72,12 +58,16 @@ public class DataSourceConfig {
             logger.error("can't load hydro-config.yaml");
             throw new RuntimeException();
         }
+        Optional.ofNullable(config.get("server")).ifPresent(s -> {
+            String portVal = s.getOrDefault("port", "8080");
+            serverPort = Integer.valueOf(portVal);
+        });
         Optional.ofNullable(config.get("database")).ifPresent(m -> {
-            setHost(m.get("host"));
-            setPort(String.valueOf(m.get("port")));
-            setUserName(m.get("userName"));
-            setPassword(String.valueOf(m.get("password")));
-            setDatabaseName(m.get("name"));
+            host = m.get("host");
+            port = String.valueOf(m.get("port"));
+            userName = m.get("userName");
+            password = String.valueOf(m.get("password"));
+            databaseName = m.get("name");
         });
 
         initialCheck();
@@ -92,6 +82,11 @@ public class DataSourceConfig {
         dataSource.setPassword(password);
 
         return dataSource;
+    }
+
+    @Bean
+    public TomcatServletWebServerFactory servletContainer(){
+        return new TomcatServletWebServerFactory(serverPort);
     }
 
     private void initialCheck(){
