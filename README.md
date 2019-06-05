@@ -14,6 +14,10 @@
 
 <br>
 
+[English]()
+
+<br>
+
 > 一个简单一点的Java动态博客系统
 
 为什么要选择Hydro：
@@ -84,7 +88,7 @@ Rendering = SemanticStyle.jpg ## 主题预览图 *
 wrapper = pages/wrapper ## 用户自定义页面外部框架 *
 
 ## 以下为路由配置模块 
-## Route.为前缀 后跟实际请求地址 例如网站域名为www.hydro.com 那么index页面的访问地址则为 www.hydro.com/hydro
+## Route.为前缀 后跟实际请求地址 例如网站域名为www.hydro.com 那么index页面的访问地址则为 www.hydro.com/index
 ## 而属性值为页面在主题内的相对地址
 ## 目前系统只支持单级路由地址
 ## 特殊：Route.post.detail 在用户访问 "域名/post/{文章id}" 会跳转到pages/postDetail页面
@@ -101,7 +105,7 @@ Option.Index_Background = {"textName": "首页背景图", "value": "image/cactus
 Option.About_Link = {"textName": "关于我页面链接", "value": "/sample-page"}
 
 ## 例如页面中可通过 <img th:src="${option.Index_Background}">进行设值注入
-
+## 其他用法可以参考 "thymeleaf" 页面模板
 ```
 
 ## 页面预览
