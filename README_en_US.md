@@ -14,6 +14,10 @@
 
 <br>
 
+[Chinese](https://github.com/ShawJie/Hydro/blob/master/README.md)
+
+<br>
+
 > A simple dyamic blog system by Java
 
 Why choose Hydro：
