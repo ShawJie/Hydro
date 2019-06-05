@@ -14,7 +14,7 @@
 
 <br>
 
-[English]()
+[English](https://github.com/ShawJie/Hydro/blob/master/README_en_US.md)
 
 <br>
 
