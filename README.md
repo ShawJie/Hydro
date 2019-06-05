@@ -1,13 +1,18 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/Images/hydro-icon.png" width="200"/> 
+  <br>
+  <a href="https://jdk.java.net/11" target="_blank">
+    <img src="https://img.shields.io/badge/JDK-11-yellow.svg">
+  </a>
+  <a href="https://github.com/ShawJie/Hydro/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/licence-GPL-red.svg">
+  </a>
+  <a href="https://github.com/ShawJie" target="_blank">
+    <img src="https://img.shields.io/badge/%3C%2F%3E%20%E2%99%A5-Shaw-blue.svg">
+  </a>
 </div>
 
-
-[English]() <br><br>
-
-[![JDK version](https://img.shields.io/badge/JDK-11-yellow.svg)](https://jdk.java.net/11)&nbsp;&nbsp;
-[![Lince](https://img.shields.io/badge/licence-GPL-red.svg)](https://github.com/ShawJie/Hydro/blob/master/LICENSE)&nbsp;&nbsp;
-[![CodeAuthor](https://img.shields.io/badge/%3C%2F%3E%20%E2%99%A5-Shaw-blue.svg)](https://github.com/ShawJie)&nbsp;&nbsp;
+<br>
 
 > 一个简单一点的Java动态博客系统
 
@@ -27,16 +32,16 @@
   
 ## 安装方法
 - Windows：(请勿使用Windows PowerShell执行命令，否则会出现项目无法运行的情况)
-  - 下载[hydro.zip]() 并解压到任意文件夹
-  - 下载[hydro-cli]() 放置在项目根目录
+  - 下载[hydro.zip](https://github.com/ShawJie/Hydro-Release/blob/master/hydro-lastest-full.zip?raw=true) 并解压到任意文件夹
+  - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.bat) 放置在项目根目录
   - 在Mysql下创建一个数据库
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
   - 在项目根目录执行执行 `hydro-cli -i` 命令以运行系统
   - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
   - 若要关闭项目则在项目根目录执行 `hydro-cli -s` 命令
 - Linux：(请勿使用管理员权限进行以下操作，否则可能无法进行更新操作)
-  - 下载[hydro.tar.gz]() 并解压到任意文件夹
-  - 下载[hydro-cli]() 放置在项目根目录
+  - 下载[hydro.zip](https://github.com/ShawJie/Hydro-Release/blob/master/hydro-lastest-full.zip?raw=true) 并解压到任意文件夹
+  - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.sh) 放置在项目根目录
   - 在Mysql下创建一个数据库
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
   - 在项目根目录执行 `/bin/bash hydro-cli.sh -i` 命令以运行系统
