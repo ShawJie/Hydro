@@ -14,7 +14,7 @@
 
 <br>
 
-[Chinese](https://github.com/ShawJie/Hydro/blob/master/README.md)
+[中文](https://github.com/ShawJie/Hydro/blob/master/README.md)
 
 <br>
 
