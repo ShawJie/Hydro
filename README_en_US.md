@@ -54,7 +54,7 @@ Why choose Hydro：
 
 **Example：<br>**
 > The following is the directory structure of the Hydro system default theme "Semantic"  <br>
-- Semantic /* 根文件夹 */
+- Semantic /* Root directory */
   - image
     - ...Some image file
   - pages
