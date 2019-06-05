@@ -35,7 +35,7 @@
   - 下载[hydro.zip](https://github.com/ShawJie/Hydro-Release/blob/master/hydro-lastest-full.zip?raw=true) 并解压到任意文件夹
   - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.bat) 放置在项目根目录
   - 在Mysql下创建一个数据库
-  - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
+  - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码/项目挂载端口）并保存
   - 在项目根目录执行执行 `hydro-cli -i` 命令以运行系统
   - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
   - 若要关闭项目则在项目根目录执行 `hydro-cli -s` 命令
@@ -43,7 +43,7 @@
   - 下载[hydro.zip](https://github.com/ShawJie/Hydro-Release/blob/master/hydro-lastest-full.zip?raw=true) 并解压到任意文件夹
   - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.sh) 放置在项目根目录
   - 在Mysql下创建一个数据库
-  - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码）并保存
+  - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码/项目挂载端口）并保存
   - 在项目根目录执行 `/bin/bash hydro-cli.sh -i` 命令以运行系统
     - 若是通过SSH连接linux的使用者可以参考[Screen](https://www.ibm.com/developerworks/cn/linux/l-cn-screen/index.html)命令以保持在SSH关闭连接后项目能持续运行
   - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
