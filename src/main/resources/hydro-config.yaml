@@ -6,6 +6,9 @@ database:
   ## 这里输入数据库端口
   port: @database.port@
   ## 输入数据库账号和密码
-  ## 密码若为0开头则需要写在引号中 example: "0000"
   userName: @database.user@
+  ## 密码若为0开头则需要写在引号内 example: "0000"
   password: @database.pwd@
+server:
+  ## 项目启动端口号 请将端口号写在引号内 默认挂在8080端口下
+  port: "8080"
