@@ -36,7 +36,7 @@
   
 ## 安装方法
 - Windows：(请勿使用Windows PowerShell执行命令，否则会出现项目无法运行的情况)
-  - 下载[hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-0.0.2.zip) 并解压到任意文件夹
+  - 下载[hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-lastest-full.zip) 并解压到任意文件夹
   - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.bat) 放置在项目根目录
   - 在Mysql下创建一个数据库
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码/项目挂载端口）并保存
@@ -44,7 +44,7 @@
   - 浏览器访问 域名[:端口]/initial 进行用户初始化操作
   - 若要关闭项目则在项目根目录执行 `hydro-cli -s` 命令
 - Linux：(请勿使用管理员权限进行以下操作，否则可能无法进行更新操作)
-  - 下载[hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-0.0.2.zip) 并解压到任意文件夹
+  - 下载[hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-lastest-full.zip) 并解压到任意文件夹
   - 下载[hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.sh) 放置在项目根目录
   - 在Mysql下创建一个数据库
   - 编辑项目根目录的`hydro-config.yaml`文件，补充数据库信息（host/端口/数据库名/数据库用户名/数据库密码/项目挂载端口）并保存
