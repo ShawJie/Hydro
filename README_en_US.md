@@ -36,7 +36,7 @@ Why choose Hydro：
   
 ## How to install
 - Windows：(Don't use Windows PowerShell to execute commands)
-  - Download [hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-0.0.2.zip) and decompress to any folder
+  - Download [hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-lastest-full.zip) and decompress to any folder
   - Download [hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.bat) place in project Root directory
   - Create a database in Mysql
   - Edit the `hydro-config.yaml` in project root directory，fill database info and server info（host/port/DatabaseName/DatabaseUserName/DatabasePassword/ServerPort）And save
@@ -44,7 +44,7 @@ Why choose Hydro：
   - Browser access "domain[:prot]/initial" to initial blog user info
   - Execute command `hydro-cli -s` in project root directory to shutdown project
 - Linux：(Don't use administrator privileges to do the following, or you may not be able to update)
-  - Download [hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-0.0.2.zip) and decompress to any folder
+  - Download [hydro.zip](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/hydro-lastest-full.zip) and decompress to any folder
   - Download [hydro-cli](https://raw.githubusercontent.com/ShawJie/Hydro-Release/master/boot/hydro-cli.sh) place in project Root directory
   - Create a database in Mysql
   - Edit the `hydro-config.yaml`in project root directory，fill database info and server info（host/port/DatabaseName/DatabaseUserName/DatabasePassword/ServerPort）And save
